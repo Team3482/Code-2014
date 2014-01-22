@@ -41,5 +41,19 @@ public class WheelPickup extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+
+
+    public void runWheels() {
+    wheels.set(1.0);
+    }
+    
+    public void pass() {
+    wheels.set(-1.0);
+    }
+
 }
+
+
+
+
 
