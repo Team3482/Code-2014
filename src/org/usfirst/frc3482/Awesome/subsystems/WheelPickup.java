@@ -42,13 +42,16 @@ public class WheelPickup extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
 
+    public void reset() {
+        wheels.set(0.0);
+    }
 
     public void runWheels() {
-    wheels.set(1.0);
+        wheels.set(1.0);
     }
     
-    public void pass() {
-    wheels.set(-1.0);
+    public void reverseWheels() {
+        wheels.set(-1.0);
     }
 
 }

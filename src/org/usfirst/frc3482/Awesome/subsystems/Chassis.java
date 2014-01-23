@@ -43,9 +43,15 @@ public class Chassis extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-    public void drive(Joystick s){
+    public void invertMotors() {
+        robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+        robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+        robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+        robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+    }
+    public void driveWithJoystick(Joystick s){
 
-        double deadZone = .05;
+        double deadZone = .2;
         double xAxis = s.getAxis(Joystick.AxisType.kX);
         double yAxis = s.getAxis(Joystick.AxisType.kY);
         
@@ -61,8 +67,33 @@ public class Chassis extends Subsystem {
         }
         if (yAxis < deadZone && yAxis > -deadZone) {
             yAxis = 0;
+        }
+        robotDrive.arcadeDrive(yAxis, xAxis);
     }
-        robotDrive.arcadeDrive(xAxis, yAxis);
+    public void driveWithXboxController(Joystick s) {
+        double leftY = s.getRawAxis(2);
+        double rightX = s.getRawAxis(4);
+        double sensitivity = SmartDashboard.getNumber("Slider 1");
+        sensitivity /= 100;
+        double deadZone = 0.1;
+        
+        if(leftY < deadZone && leftY > -deadZone) {
+            leftY = 0;
+        }
+        if(rightX < deadZone && rightX > -deadZone) {
+            rightX = 0;
+        }
+        leftY *= sensitivity;
+        robotDrive.arcadeDrive(leftY, rightX);
+    }
+    public void move(double moveValue, double rotateValue) {
+        robotDrive.arcadeDrive(moveValue, rotateValue);
+    }
+    public void stop() {
+        robotDrive.stopMotor();
+    }
+    public void setSafety(boolean n) {
+        robotDrive.setSafetyEnabled(n);
     }
 }
 
