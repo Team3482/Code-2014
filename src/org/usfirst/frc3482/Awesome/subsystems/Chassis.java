@@ -12,7 +12,6 @@ public class Chassis extends Subsystem {
     SpeedController driveFrontLeft = RobotMap.chassisDriveFrontLeft;
     SpeedController driveBackRight = RobotMap.chassisDriveBackRight;
     SpeedController driveBackLeft = RobotMap.chassisDriveBackLeft;
-    RobotDrive robotDrive41 = RobotMap.chassisRobotDrive41;
     RobotDrive robotDrive = RobotMap.chassisRobotDrive;
 
     // Put methods for controlling this subsystem

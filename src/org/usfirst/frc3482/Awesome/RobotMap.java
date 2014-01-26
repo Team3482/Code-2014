@@ -9,7 +9,6 @@ public class RobotMap {
     public static Compressor wheelPickupCompressor;
     public static DoubleSolenoid cylinderRight;
     public static DoubleSolenoid cylinderLeft;
-    public static RobotDrive chassisRobotDrive;
     public static Relay wheelPickupSpike;
     public static SpeedController wheelPickupWheels;
     public static SpeedController catapultPull;
@@ -17,7 +16,7 @@ public class RobotMap {
     public static SpeedController chassisDriveFrontLeft;
     public static SpeedController chassisDriveBackRight;
     public static SpeedController chassisDriveBackLeft;
-    public static RobotDrive chassisRobotDrive41;
+    public static RobotDrive chassisRobotDrive;
     
     
     public static void init() {
@@ -49,13 +48,13 @@ public class RobotMap {
         chassisDriveBackLeft = new Talon(1, 4);
 	LiveWindow.addActuator("Chassis", "Drive Back Left", (Talon) chassisDriveBackLeft);
         
-        chassisRobotDrive41 = new RobotDrive(chassisDriveFrontLeft, chassisDriveBackLeft,
+        chassisRobotDrive = new RobotDrive(chassisDriveFrontLeft, chassisDriveBackLeft,
               chassisDriveFrontRight, chassisDriveBackRight);
 	
-        chassisRobotDrive41.setSafetyEnabled(true);
-        chassisRobotDrive41.setExpiration(0.1);
-        chassisRobotDrive41.setSensitivity(0.5);
-        chassisRobotDrive41.setMaxOutput(1.0);
+        chassisRobotDrive.setSafetyEnabled(true);
+        chassisRobotDrive.setExpiration(0.1);
+        chassisRobotDrive.setSensitivity(0.5);
+        chassisRobotDrive.setMaxOutput(1.0);
 
     }
 }

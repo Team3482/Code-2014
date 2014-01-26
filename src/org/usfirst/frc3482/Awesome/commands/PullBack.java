@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc3482.Awesome.Robot;
 
 public class  PullBack extends Command {
-    
+    // uses speed controller to pull catapult back
     boolean isFinished = false;
     public PullBack() {
         // Use requires() here to declare subsystem dependencies

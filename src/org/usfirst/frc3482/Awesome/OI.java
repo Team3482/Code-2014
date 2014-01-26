@@ -95,10 +95,6 @@ public class OI {
         SmartDashboard.putData("Stop", new Stop());
 
     }
-    
-    public Joystick getJoystick() {
-        return joystick;
-    }
 
 }
 
