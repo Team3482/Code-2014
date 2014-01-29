@@ -57,4 +57,5 @@ public class WheelPickup extends Subsystem {
         cylinderRight.set(DoubleSolenoid.Value.kOff);
         cylinderLeft.set(DoubleSolenoid.Value.kOff);
     }
+    
 }

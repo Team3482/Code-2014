@@ -50,6 +50,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
         wheelPickup.startCompressor();
+        catapult.lock();
         if (autonomousCommand != null) autonomousCommand.start();
     }
 

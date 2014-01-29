@@ -7,8 +7,11 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Catapult extends Subsystem {
+    
     SpeedController pull = RobotMap.catapultPull;
-
+    DigitalInput catapultLimit = RobotMap.catapultSensor;
+    DoubleSolenoid cylinderLock = RobotMap.cylinderCatapultLock;
+    DoubleSolenoid cylinderRelease = RobotMap.cylinderCatapultRelease;
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -26,9 +29,20 @@ public class Catapult extends Subsystem {
     public void stopPull(){
         pull.set(0.0);
     }
-    public void release() {
-        //TODO:Release catapult
+    public boolean isLimit() {
+        return catapultLimit.get();
+    }
+    
+    public void lock() {
+        cylinderLock.set(DoubleSolenoid.Value.kForward);
+    }
+    public void unlock() {
+        cylinderLock.set(DoubleSolenoid.Value.kReverse);
+    }
+    public void releaseOpen() {
+        cylinderRelease.set(DoubleSolenoid.Value.kForward);
+    }
+    public void releaseClose() {
+        cylinderRelease.set(DoubleSolenoid.Value.kReverse);
     }
 }
-
-

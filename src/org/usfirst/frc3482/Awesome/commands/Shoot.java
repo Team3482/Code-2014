@@ -1,5 +1,6 @@
 package org.usfirst.frc3482.Awesome.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc3482.Awesome.Robot;
 
@@ -15,7 +16,10 @@ public class  Shoot extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.catapult.release();
+        Robot.catapult.unlock();
+        Timer.delay(0.1);
+        Robot.catapult.releaseOpen();
+        Timer.delay(0.5);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -30,7 +34,8 @@ public class  Shoot extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    
+        Robot.catapult.releaseClose();
+        Robot.catapult.lock();
     }
 
     // Called when another command which requires one or more of the same
