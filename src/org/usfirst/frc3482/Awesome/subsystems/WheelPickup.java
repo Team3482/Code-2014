@@ -20,7 +20,6 @@ public class WheelPickup extends Subsystem {
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-        setDefaultCommand(new RunWheels());
 	
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

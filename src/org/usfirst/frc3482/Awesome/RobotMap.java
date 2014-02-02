@@ -54,7 +54,7 @@ public class RobotMap {
 	LiveWindow.addActuator("Chassis", "Drive Back Left", (Talon) chassisDriveBackLeft);
         
         chassisRobotDrive = new RobotDrive(chassisDriveFrontLeft, chassisDriveBackLeft,
-              chassisDriveFrontRight, chassisDriveBackRight);
+        chassisDriveFrontRight, chassisDriveBackRight);
 	
         chassisRobotDrive.setSafetyEnabled(true);
         chassisRobotDrive.setExpiration(0.1);

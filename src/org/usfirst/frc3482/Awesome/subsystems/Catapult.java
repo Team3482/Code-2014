@@ -17,7 +17,6 @@ public class Catapult extends Subsystem {
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-        setDefaultCommand(new Shoot());
 	
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
