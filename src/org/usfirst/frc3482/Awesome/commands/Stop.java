@@ -3,7 +3,7 @@ package org.usfirst.frc3482.Awesome.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc3482.Awesome.Robot;
 
-public class  Stop extends Command {
+public class Stop extends Command {
     
     boolean isFinished = false;
     public Stop() {
@@ -15,12 +15,12 @@ public class  Stop extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.chassis.stop();
-        isFinished = true;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        Robot.chassis.stop();
+        isFinished = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()

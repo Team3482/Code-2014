@@ -76,8 +76,5 @@ public class Chassis extends Subsystem {
     public void setSafety(boolean n) {
         robotDrive.setSafetyEnabled(n);
     }
-    public Joystick getJoystick() {
-        return Robot.oi.joystick;
-    }
 }
 

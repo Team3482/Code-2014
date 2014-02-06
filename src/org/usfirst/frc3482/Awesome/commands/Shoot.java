@@ -16,14 +16,15 @@ public class  Shoot extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.catapult.unlock();
-        Timer.delay(0.1);
-        Robot.catapult.releaseOpen();
-        Timer.delay(0.5);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        Robot.catapult.unlock();
+        Timer.delay(0.1);
+        Robot.catapult.releaseOpen();
+        // TODO: Why is there a second wait?
+        Timer.delay(0.5);
         isFinished = true;
     }
 

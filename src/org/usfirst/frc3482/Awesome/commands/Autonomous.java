@@ -5,37 +5,34 @@ import org.usfirst.frc3482.Awesome.Robot;
 
 public class  Autonomous extends CommandGroup {
     
-    private boolean isFinished = false;
     public Autonomous() {
-        // Use requires() here to declare subsystem dependencies
-	requires(Robot.camera);
-    }
+        // Add Commands here:
+        // e.g. addSequential(new Command1());
+        //      addSequential(new Command2());
+        // these will run in order.
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-        addParallel(new PullBack());
+        // To run multiple commands at the same time,
+        // use addParallel()
+        // e.g. addParallel(new Command1());
+        //      addSequential(new Command2());
+        // Command1 and Command2 will run in parallel.
+
+        // A command group will require all of the subsystems that each member
+        // would require.
+        // e.g. if Command1 requires chassis, and Command2 requires arm,
+        // a CommandGroup containing them would require both the chassis and the
+        // arm.
+        
+        requires(Robot.camera);
+        requires(Robot.chassis);
+        
+        System.out.println("Calling autoshoot");
+        addSequential(new AutoShoot());
+        
+        /*addParallel(new PullBack());
         addSequential(new Aim());
         addSequential(new Shoot());
-        addSequential(new Move(2,0,5));
-        isFinished = true;
-    }
-
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    }
-
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return isFinished;
-    }
-
-    // Called once after isFinished returns true
-    protected void end() {
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-        end();
+        addSequential(new Move(2,0,5));*/
     }
 }
+
