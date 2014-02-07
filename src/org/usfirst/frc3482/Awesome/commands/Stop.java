@@ -19,6 +19,7 @@ public class Stop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        //stops the robot
         Robot.chassis.stop();
         isFinished = true;
     }

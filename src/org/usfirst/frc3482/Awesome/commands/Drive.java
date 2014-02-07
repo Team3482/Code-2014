@@ -20,7 +20,7 @@ public class  Drive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        //Robot.chassis.driveWithXboxController(xboxController);
+        //Drive with the joystick under xbox controller configurtation
         Robot.chassis.driveWithXboxController(Robot.oi.joystick);
     }
 
@@ -40,4 +40,3 @@ public class  Drive extends Command {
         end();
     }
 }
-// TODO: whaddup

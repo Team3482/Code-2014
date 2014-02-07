@@ -23,25 +23,34 @@ public class Catapult extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
 
+    //starts pulling back the catapult with a motor
     public void startPull(){
         pull.set(1.0);
     }
+    //stops pulling back the catapult with a motor
     public void stopPull(){
         pull.set(0.0);
     }
+    //checks to see if the catapult has been pulled back enough
     public boolean isLimit() {
         return catapultLimit.get();
     }
     
+    //TODO:edit function names
+    
+    //locks the catapult via pistons (clutch)
     public void lock() {
         cylinderLock.set(DoubleSolenoid.Value.kForward);
     }
+    //unlocks the catapult via pistons (clutch)
     public void unlock() {
         cylinderLock.set(DoubleSolenoid.Value.kReverse);
     }
+    //releases the catapult via piston (ratchet)
     public void releaseOpen() {
         cylinderRelease.set(DoubleSolenoid.Value.kForward);
     }
+    //closes the catapult release via piston (ratchet)
     public void releaseClose() {
         cylinderRelease.set(DoubleSolenoid.Value.kReverse);
     }

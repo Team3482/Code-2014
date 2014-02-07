@@ -19,7 +19,9 @@ public class  Pass extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {  
+    protected void execute() {
+        //TODO: make needed checks
+        //sets the ball intake wheels to reverse (-1)
         Robot.wheelPickup.reverseWheels();
         System.out.println("Running wheels backward");
     }
@@ -31,6 +33,7 @@ public class  Pass extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        //stops the ball intake wheels from running
         Robot.wheelPickup.stopWheels();
         System.out.println("Stop wheels");
     }

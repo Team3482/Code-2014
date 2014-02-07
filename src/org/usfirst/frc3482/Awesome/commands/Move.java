@@ -30,9 +30,12 @@ public class  Move extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        //disabled saftey and moves to a location
         Robot.chassis.setSafety(false);
         Robot.chassis.move(forward, turn);
+        //waits for a given time
         Timer.delay(time);
+        //enables safety and stops
         Robot.chassis.move(0.0, 0.0);
         Robot.chassis.setSafety(true);
         isFinished = true;

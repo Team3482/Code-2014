@@ -23,12 +23,14 @@ public class Chassis extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    //inverts the motors
     public void invertMotors() {
         robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
         robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
         robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
     }
+    //drives the robot with a joystick - normal configuration
     public void driveWithJoystick(Joystick s){
 
         double deadZone = .2;
@@ -50,6 +52,7 @@ public class Chassis extends Subsystem {
         }
         robotDrive.arcadeDrive(yAxis, xAxis);
     }
+    //drives the robot with a joystick - xbox configuration
     public void driveWithXboxController(Joystick s) {
         double leftY = s.getRawAxis(2);
         double rightX = s.getRawAxis(4);
@@ -66,13 +69,16 @@ public class Chassis extends Subsystem {
         leftY *= sensitivity;
         robotDrive.arcadeDrive(leftY, rightX);
     }
+    //moves the robot to a location
     public void move(double moveValue, double rotateValue) {
         robotDrive.arcadeDrive(moveValue, rotateValue);
     }
+    //stops the robot
     public void stop() {
         robotDrive.stopMotor();
         Robot.wheelPickup.stopCompressor();
     }
+    //sets the safety
     public void setSafety(boolean n) {
         robotDrive.setSafetyEnabled(n);
     }

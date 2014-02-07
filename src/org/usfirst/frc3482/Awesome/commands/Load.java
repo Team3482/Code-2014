@@ -18,6 +18,7 @@ public class  Load extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        //extends the pistons for the wheel pickup system
         Robot.wheelPickup.extend();
     }
 
@@ -28,6 +29,7 @@ public class  Load extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        //retracts and sets the pistons off for the wheel pickup system
         Robot.wheelPickup.retract();
         Robot.wheelPickup.turnOff();
     }

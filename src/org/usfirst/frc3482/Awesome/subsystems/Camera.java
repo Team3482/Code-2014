@@ -19,11 +19,11 @@ public class Camera extends Subsystem {
     // vison processing constants
     final int HUE_LOW =115;
     final int HUE_HIGH = 140;
-    final int SATURATION_LOW = 150;
+    final int SATURATION_LOW = 215;
     final int SATURATION_HIGH = 255;
     final int VALUE_LOW = 215;
     final int VALUE_HIGH = 255;
-    
+    final int EROSIONS = 3;
     // Camera constants
     final String IP_ADDRESS = "10.34.82.11";
     final int BRIGHTNESS = 40;
@@ -79,6 +79,21 @@ public class Camera extends Subsystem {
         img.write("/tmp/original.png");
         filtered = img.thresholdHSV(HUE_LOW, HUE_HIGH, SATURATION_LOW, SATURATION_HIGH, VALUE_LOW, VALUE_HIGH);
         filtered.write("/tmp/filtered.png");
+        filtered.removeSmallObjects(true, EROSIONS);
+        filtered.write("/tmp/size_filtered.png");
+        filtered.convexHull(false);
+        
+    }
+    
+    //TODO:finish scoreImage()
+    public void scoreImage(BinaryImage img) throws NIVisionException {
+        int[] scoredBlobs;
+        ParticleAnalysisReport[] blobs = img.getOrderedParticleAnalysisReports(3);
+        for(int i = 0; i < blobs.length; i++) {
+            int aspectRatio = blobs[i].boundingRectHeight / blobs[i].boundingRectWidth;
+            
+        // have not initialized or returned scoredBlobs yet
+        }
     }
 }
 

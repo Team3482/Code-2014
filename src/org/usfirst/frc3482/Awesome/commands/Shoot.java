@@ -20,11 +20,16 @@ public class  Shoot extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.catapult.unlock();
-        Timer.delay(0.1);
-        Robot.catapult.releaseOpen();
-        // TODO: Why is there a second wait?
-        Timer.delay(0.5);
+        if(Robot.catapult.isLimit()) {
+            //unlocks the catapult via pistons
+            Robot.catapult.unlock();
+            //allow time for piston to finish
+            Timer.delay(0.1);
+            //release the catapult via piston
+            Robot.catapult.releaseOpen();
+        } else {
+            //TODO: call pullback
+        }
         isFinished = true;
     }
 
@@ -35,8 +40,6 @@ public class  Shoot extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.catapult.releaseClose();
-        Robot.catapult.lock();
     }
 
     // Called when another command which requires one or more of the same

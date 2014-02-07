@@ -3,6 +3,7 @@ package org.usfirst.frc3482.Awesome.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc3482.Awesome.Robot;
 
+//TODO:Aim and sensor for distance measurement
 public class  Aim extends Command {
 
     public Aim() {

@@ -18,17 +18,23 @@ public class  PullBack extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        //starts pulling the catapult back with a motor
         Robot.catapult.startPull();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+        //checks to see if the catapult is pulled back enough
         return Robot.catapult.isLimit();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        //stops pulling the catapult back with a motor
         Robot.catapult.stopPull();
+        //closes the release and lock the catapult via pistons
+        Robot.catapult.releaseClose();
+        Robot.catapult.lock();
     }
 
     // Called when another command which requires one or more of the same

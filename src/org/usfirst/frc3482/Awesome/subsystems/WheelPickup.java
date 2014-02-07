@@ -24,34 +24,42 @@ public class WheelPickup extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-
+    
+    //stops running the intake wheels
     public void stopWheels() {
         wheels.set(0.0);
     }
+    //starts running the intake wheels - forward
     public void forwardWheels() {
         wheels.set(1.0);
     }
+    //starts running the intake wheels - reverse
     public void reverseWheels() {
         wheels.set(-1.0);
     }
     
+    //starts the compressor
     public void startCompressor() {
         if(!isCompressing) {
             compressor.start();
         }
     }
+    //stops the compressor
     public void stopCompressor() {
         compressor.stop();
         isCompressing = false;
     }
+    //extends the wheel intake pistons
     public void extend() {
         cylinderRight.set(DoubleSolenoid.Value.kForward);
         cylinderLeft.set(DoubleSolenoid.Value.kForward);
     }
+    //retracts the wheel intake pistons
     public void retract() {
         cylinderRight.set(DoubleSolenoid.Value.kReverse);
         cylinderLeft.set(DoubleSolenoid.Value.kReverse);
     }
+    //turns off the wheel intake pistons
     public void turnOff() {
         cylinderRight.set(DoubleSolenoid.Value.kOff);
         cylinderLeft.set(DoubleSolenoid.Value.kOff);
