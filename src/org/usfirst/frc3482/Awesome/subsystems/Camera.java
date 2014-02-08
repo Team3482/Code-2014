@@ -5,6 +5,7 @@ import org.usfirst.frc3482.Awesome.RobotMap;
 import org.usfirst.frc3482.Awesome.commands.*;
 import edu.wpi.first.wpilibj.camera.*;
 import edu.wpi.first.wpilibj.image.*;
+import java.lang.Math;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -24,6 +25,7 @@ public class Camera extends Subsystem {
     final int VALUE_LOW = 215;
     final int VALUE_HIGH = 255;
     final int EROSIONS = 3;
+    final double IDEAL_ASPECT_RATIO = 1 / 8;
     // Camera constants
     final String IP_ADDRESS = "10.34.82.11";
     final int BRIGHTNESS = 40;
@@ -53,6 +55,7 @@ public class Camera extends Subsystem {
         }
     }*/
     public void initCamera () throws AxisCameraException {
+        // initializes camera with settings defined in constants  
         cam = AxisCamera.getInstance(IP_ADDRESS);
         while(!cam.freshImage()) {
             Timer.delay(0.5);
@@ -86,14 +89,32 @@ public class Camera extends Subsystem {
     }
     
     //TODO:finish scoreImage()
-    public void scoreImage(BinaryImage img) throws NIVisionException {
-        int[] scoredBlobs;
-        ParticleAnalysisReport[] blobs = img.getOrderedParticleAnalysisReports(3);
-        for(int i = 0; i < blobs.length; i++) {
-            int aspectRatio = blobs[i].boundingRectHeight / blobs[i].boundingRectWidth;
+    public double[] scoreImage(BinaryImage img) throws NIVisionException {
+       // returns array of scores describing the probability that each blob is the target 
+       double[] scoredBlobs; 
+       ParticleAnalysisReport[] blobs = img.getOrderedParticleAnalysisReports();
+       for(int i = 0; i < blobs.length; i++) {
+           int boundingBoxArea = blobs[i].boundingRectHeight * blobs[i].boundingRectWidth;
+           double blobArea = blobs[i].particleArea;
+           double rectangularity = blobArea / boundingBoxArea * 100;
+           int longSide;
+           int shortSide;
+           if (blobs[i].boundingRectHeight > blobs[i].boundingRectWidth){
+               longSide = blobs[i].boundingRectHeight;
+               shortSide = blobs[i].boundingRectWidth;
+           } else {
+               longSide = blobs[i].boundingRectWidth;
+               shortSide = blobs[i].boundingRectHeight;
+           }
+           // score that describes the similarity in aspect ratio between the blob and the ideal target 
+           double ratio = (shortSide / longSide) / IDEAL_ASPECT_RATIO;
+           double aspectRatioScore = Math.max(0, Math.min(100*(1-Math.abs(1-ratio)), 100));
+           
+           
             
-        // have not initialized or returned scoredBlobs yet
+       // have not initialized or returned scoredBlobs yet
         }
     }
+    //TODO: Free your memory
 }
 
