@@ -25,7 +25,8 @@ public class Camera extends Subsystem {
     final int VALUE_LOW = 215;
     final int VALUE_HIGH = 255;
     final int EROSIONS = 3;
-    final double IDEAL_ASPECT_RATIO = 1 / 8;
+    final double IDEAL_ASPECT_RATIO_VERTICAL = 4/32;
+    final double IDEAL_ASPECT_RATIO_HORIZONTAL = 23.5/4;
     // Camera constants
     final String IP_ADDRESS = "10.34.82.11";
     final int BRIGHTNESS = 40;
@@ -37,8 +38,10 @@ public class Camera extends Subsystem {
     final AxisCamera.ResolutionT RESOLUTION = AxisCamera.ResolutionT.k640x480;
     final AxisCamera.RotationT ROTATION = AxisCamera.RotationT.k0;
     final AxisCamera.WhiteBalanceT WHITE_BALANCE = AxisCamera.WhiteBalanceT.fixedIndoor;
-    
-    
+    //Target type constants
+    final int NEITHER = 0;
+    final int VERTICAL = 1;
+    final int HORIZONTAL = -1;
     
     public void initDefaultCommand() {
 	
@@ -82,39 +85,44 @@ public class Camera extends Subsystem {
         img.write("/tmp/original.png");
         filtered = img.thresholdHSV(HUE_LOW, HUE_HIGH, SATURATION_LOW, SATURATION_HIGH, VALUE_LOW, VALUE_HIGH);
         filtered.write("/tmp/filtered.png");
-        filtered.removeSmallObjects(true, EROSIONS);
+        filtered = filtered.removeSmallObjects(true, EROSIONS);
         filtered.write("/tmp/size_filtered.png");
         filtered.convexHull(false);
-        
+        double[] temp = getTargetTypes(filtered);
+        for(int i=0;i<temp.length;i++) {
+            System.out.println(temp[i]);
+        }
     }
     
-    //TODO:finish scoreImage()
-    public double[] scoreImage(BinaryImage img) throws NIVisionException {
-       // returns array of scores describing the probability that each blob is the target 
-       double[] scoredBlobs; 
+    public double[] getTargetTypes(BinaryImage img) throws NIVisionException {
+       // returns array of target types in the image
        ParticleAnalysisReport[] blobs = img.getOrderedParticleAnalysisReports();
+       double[] scoredBlobs = new double[blobs.length];
        for(int i = 0; i < blobs.length; i++) {
            int boundingBoxArea = blobs[i].boundingRectHeight * blobs[i].boundingRectWidth;
            double blobArea = blobs[i].particleArea;
            double rectangularity = blobArea / boundingBoxArea * 100;
-           int longSide;
-           int shortSide;
-           if (blobs[i].boundingRectHeight > blobs[i].boundingRectWidth){
-               longSide = blobs[i].boundingRectHeight;
-               shortSide = blobs[i].boundingRectWidth;
-           } else {
-               longSide = blobs[i].boundingRectWidth;
-               shortSide = blobs[i].boundingRectHeight;
-           }
            // score that describes the similarity in aspect ratio between the blob and the ideal target 
-           double ratio = (shortSide / longSide) / IDEAL_ASPECT_RATIO;
-           double aspectRatioScore = Math.max(0, Math.min(100*(1-Math.abs(1-ratio)), 100));
-           
-           
-            
-       // have not initialized or returned scoredBlobs yet
+           double aspectRatio = (blobs[i].boundingRectWidth / blobs[i].boundingRectHeight);
+           double percentDifferenceVertical = ((IDEAL_ASPECT_RATIO_VERTICAL-aspectRatio)/IDEAL_ASPECT_RATIO_VERTICAL)*100;
+           double percentDifferenceHorizontal = ((IDEAL_ASPECT_RATIO_HORIZONTAL-aspectRatio)/IDEAL_ASPECT_RATIO_HORIZONTAL)*100;
+           //check if it is a vertical target, horizontal target or neither
+           int targetType = 2;
+           if(rectangularity > 90) {
+               if(percentDifferenceVertical < 20) {
+                   targetType = VERTICAL;
+               }
+               else if(percentDifferenceHorizontal < 20) {
+                   targetType = HORIZONTAL;
+               } else {
+                   targetType = NEITHER;
+               }
+           }
+           scoredBlobs[i] = targetType;
         }
+       return scoredBlobs;
     }
+    
     //TODO: Free your memory
 }
 

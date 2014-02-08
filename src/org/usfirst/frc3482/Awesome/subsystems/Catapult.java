@@ -6,9 +6,7 @@ import edu.wpi.first.wpilibj.*;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Catapult extends Subsystem {
-    // TODO: Document this subsystem (and all of the others too)
-    
+public class Catapult extends Subsystem {    
     SpeedController pull = RobotMap.catapultPull;
     DigitalInput catapultLimit = RobotMap.catapultSensor;
     DoubleSolenoid cylinderLock = RobotMap.cylinderCatapultLock;

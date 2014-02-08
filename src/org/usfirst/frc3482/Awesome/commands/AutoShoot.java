@@ -7,12 +7,8 @@ package org.usfirst.frc3482.Awesome.commands;
 import org.usfirst.frc3482.Awesome.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- * @author Westmont Robotics
- */
 public class AutoShoot extends Command {
-    
+        
     public AutoShoot() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
