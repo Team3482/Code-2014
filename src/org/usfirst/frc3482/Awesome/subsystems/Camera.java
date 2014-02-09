@@ -101,18 +101,18 @@ public class Camera extends Subsystem {
        for(int i = 0; i < blobs.length; i++) {
            int boundingBoxArea = blobs[i].boundingRectHeight * blobs[i].boundingRectWidth;
            double blobArea = blobs[i].particleArea;
-           double rectangularity = blobArea / boundingBoxArea * 100;
+           double rectangularity = (blobArea / boundingBoxArea) * 100;
            // score that describes the similarity in aspect ratio between the blob and the ideal target 
            double aspectRatio = (blobs[i].boundingRectWidth / blobs[i].boundingRectHeight);
            double percentDifferenceVertical = ((IDEAL_ASPECT_RATIO_VERTICAL-aspectRatio)/IDEAL_ASPECT_RATIO_VERTICAL)*100;
            double percentDifferenceHorizontal = ((IDEAL_ASPECT_RATIO_HORIZONTAL-aspectRatio)/IDEAL_ASPECT_RATIO_HORIZONTAL)*100;
            //check if it is a vertical target, horizontal target or neither
            int targetType = 2;
-           if(rectangularity > 90) {
-               if(percentDifferenceVertical < 20) {
+           if(rectangularity > 75) {
+               if(percentDifferenceVertical < 25) {
                    targetType = VERTICAL;
                }
-               else if(percentDifferenceHorizontal < 20) {
+               else if(percentDifferenceHorizontal < 25) {
                    targetType = HORIZONTAL;
                } else {
                    targetType = NEITHER;
