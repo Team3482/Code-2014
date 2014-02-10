@@ -1,19 +1,27 @@
+
 package org.usfirst.frc3482.Awesome.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc3482.Awesome.Robot;
 
-public class  Load extends Command {
+// Extends CommandGroup in order to be able to drive at the same time
+public class  Load extends CommandGroup {
 
     public Load() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-	
         requires(Robot.wheelPickup);
+        
+        // allow driving to happen while load executes
+        addParallel(new Drive());
+        // run the wheels while loading
+        addParallel(new RunWheels());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("New load made");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,7 +39,6 @@ public class  Load extends Command {
     protected void end() {
         //retracts and sets the pistons off for the wheel pickup system
         Robot.wheelPickup.retract();
-        Robot.wheelPickup.turnOff();
     }
 
     // Called when another command which requires one or more of the same

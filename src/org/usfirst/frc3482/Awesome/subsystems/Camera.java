@@ -47,6 +47,7 @@ public class Camera extends Subsystem {
 	
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+        // if you stare too long into the public void, the public void stares also into you. -PHILOSOPHER 
     }
     /*public void setupCamera() {
         camera.writeMaxFPS(4);
@@ -87,14 +88,15 @@ public class Camera extends Subsystem {
         filtered.write("/tmp/filtered.png");
         filtered = filtered.removeSmallObjects(true, EROSIONS);
         filtered.write("/tmp/size_filtered.png");
-        filtered.convexHull(false);
+        filtered = filtered.convexHull(false);
+        filtered.write("/tmp/convex_hull_filtered.png");
         double[] temp = getTargetTypes(filtered);
         for(int i=0;i<temp.length;i++) {
             System.out.println(temp[i]);
         }
     }
     
-    public double[] getTargetTypes(BinaryImage img) throws NIVisionException {
+    private double[] getTargetTypes(BinaryImage img) throws NIVisionException {
        // returns array of target types in the image
        ParticleAnalysisReport[] blobs = img.getOrderedParticleAnalysisReports();
        double[] scoredBlobs = new double[blobs.length];

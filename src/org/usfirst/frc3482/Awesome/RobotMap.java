@@ -41,16 +41,16 @@ public class RobotMap {
         catapultPull = new Talon(1, 5);
 	LiveWindow.addActuator("Catapult", "Pull", (Talon) catapultPull);
         
-        chassisDriveFrontRight = new Talon(1, 1);
+        chassisDriveFrontRight = new Talon(1, 3);
 	LiveWindow.addActuator("Chassis", "Drive Front Right", (Talon) chassisDriveFrontRight);
         
-        chassisDriveFrontLeft = new Talon(1, 2);
+        chassisDriveFrontLeft = new Talon(1, 1);
 	LiveWindow.addActuator("Chassis", "Drive Front Left", (Talon) chassisDriveFrontLeft);
         
-        chassisDriveBackRight = new Talon(1, 3);
+        chassisDriveBackRight = new Talon(1, 4);
 	LiveWindow.addActuator("Chassis", "Drive Back Right", (Talon) chassisDriveBackRight);
         
-        chassisDriveBackLeft = new Talon(1, 4);
+        chassisDriveBackLeft = new Talon(1, 2);
 	LiveWindow.addActuator("Chassis", "Drive Back Left", (Talon) chassisDriveBackLeft);
         
         chassisRobotDrive = new RobotDrive(chassisDriveFrontLeft, chassisDriveBackLeft,
