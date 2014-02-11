@@ -6,6 +6,7 @@ import org.usfirst.frc3482.Awesome.commands.*;
 import edu.wpi.first.wpilibj.camera.*;
 import edu.wpi.first.wpilibj.image.*;
 import java.lang.Math;
+import org.usfirst.frc3482.Awesome.Robot;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -16,7 +17,6 @@ public class Camera extends Subsystem {
     AxisCamera cam;
     ColorImage img;
     BinaryImage filtered;
-
     // vison processing constants
     final int HUE_LOW =115;
     final int HUE_HIGH = 140;
@@ -82,6 +82,8 @@ public class Camera extends Subsystem {
         // determine whether image is hot or not; whether veritcal target is in
         // the area (determined by the pixel ratio from horizontal target that is always there)
         // return hot or not
+        boolean verticalFound = false;
+        boolean horizontalFound = false;
         img = cam.getImage();
         img.write("/tmp/original.png");
         filtered = img.thresholdHSV(HUE_LOW, HUE_HIGH, SATURATION_LOW, SATURATION_HIGH, VALUE_LOW, VALUE_HIGH);
@@ -93,6 +95,17 @@ public class Camera extends Subsystem {
         double[] temp = getTargetTypes(filtered);
         for(int i=0;i<temp.length;i++) {
             System.out.println(temp[i]);
+            if (temp[i] == VERTICAL) {
+                verticalFound = true;
+            }
+            else if (temp[i] == HORIZONTAL) {
+                horizontalFound = true;
+            }   
+        }
+        if (verticalFound && horizontalFound){
+            
+        } else{
+            
         }
     }
     
