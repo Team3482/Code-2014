@@ -8,8 +8,7 @@ import java.util.Vector;
 public class RobotMap {
     public static DigitalInput catapultSensor;
     public static Compressor wheelPickupCompressor;
-    public static DoubleSolenoid cylinderRight;
-    public static DoubleSolenoid cylinderLeft;
+    public static DoubleSolenoid cylinderArm;
     public static Relay wheelPickupSpike;
     public static SpeedController wheelPickupWheels;
     public static SpeedController catapultPull;
@@ -27,8 +26,7 @@ public class RobotMap {
         
         wheelPickupCompressor = new Compressor(1, 1);
 	
-        cylinderRight = new DoubleSolenoid(1, 2);
-        cylinderLeft = new DoubleSolenoid(3, 4);
+        cylinderArm = new DoubleSolenoid(1, 2);
         cylinderCatapultLock = new DoubleSolenoid(5, 6);
         cylinderCatapultRelease = new DoubleSolenoid(7, 8);
         

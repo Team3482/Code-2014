@@ -38,6 +38,8 @@ public class Camera extends Subsystem {
     final AxisCamera.ResolutionT RESOLUTION = AxisCamera.ResolutionT.k640x480;
     final AxisCamera.RotationT ROTATION = AxisCamera.RotationT.k0;
     final AxisCamera.WhiteBalanceT WHITE_BALANCE = AxisCamera.WhiteBalanceT.fixedIndoor;
+    //Camera Viewing constants
+    final double HORIZONTAL_THETA = 67/2;
     //Target type constants
     final int NEITHER = 0;
     final int VERTICAL = 1;
@@ -138,6 +140,20 @@ public class Camera extends Subsystem {
        return scoredBlobs;
     }
     
-    //TODO: Free your memory
+    public void freeMemory() {
+        //TODO: Free memory
+    }
+    
+    public double getDistance() {
+        // TODO: Find Distance To Target
+        // M1013 has horizontal viewing angle of 67 degrees (2 theta)
+        // use FOV, theta, w, T to find d
+        // Tft/Tpixel = FOVft/FOVpixxel and FOVft = 2w = 2dtan(theta)
+        // d = Tft*FOVpixel/(2Tpixeltan(theta))
+        //https://wpilib.screenstepslive.com/s/3120/m/8731/l/90361-identifying-and-processing-the-targets
+        double d=0.0;
+        return d;
+        //TODO: calibrate camera & code
+    }
 }
 

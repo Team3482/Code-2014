@@ -9,8 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class WheelPickup extends Subsystem {
 
     Compressor compressor = RobotMap.wheelPickupCompressor;
-    DoubleSolenoid cylinderRight = RobotMap.cylinderRight;
-    DoubleSolenoid cylinderLeft = RobotMap.cylinderLeft;
+    DoubleSolenoid cylinderArm = RobotMap.cylinderArm;
     Relay spike = RobotMap.wheelPickupSpike;
     SpeedController wheels = RobotMap.wheelPickupWheels;
     
@@ -51,18 +50,15 @@ public class WheelPickup extends Subsystem {
     }
     //extends the wheel intake pistons
     public void extend() {
-        cylinderRight.set(DoubleSolenoid.Value.kForward);
-        cylinderLeft.set(DoubleSolenoid.Value.kForward);
+        cylinderArm.set(DoubleSolenoid.Value.kForward);
     }
     //retracts the wheel intake pistons
     public void retract() {
-        cylinderRight.set(DoubleSolenoid.Value.kReverse);
-        cylinderLeft.set(DoubleSolenoid.Value.kReverse);
+        cylinderArm.set(DoubleSolenoid.Value.kReverse);
     }
     //turns off the wheel intake pistons
     public void turnOff() {
-        cylinderRight.set(DoubleSolenoid.Value.kOff);
-        cylinderLeft.set(DoubleSolenoid.Value.kOff);
+        cylinderArm.set(DoubleSolenoid.Value.kOff);
     }
     
 }
