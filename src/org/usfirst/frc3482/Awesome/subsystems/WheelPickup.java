@@ -10,7 +10,6 @@ public class WheelPickup extends Subsystem {
 
     Compressor compressor = RobotMap.wheelPickupCompressor;
     DoubleSolenoid cylinderArm = RobotMap.cylinderArm;
-    Relay spike = RobotMap.wheelPickupSpike;
     SpeedController wheels = RobotMap.wheelPickupWheels;
     
     boolean isCompressing = false;
@@ -22,6 +21,7 @@ public class WheelPickup extends Subsystem {
 	
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+        retract();
     }
     
     //stops running the intake wheels

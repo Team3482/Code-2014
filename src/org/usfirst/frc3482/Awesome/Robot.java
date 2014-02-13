@@ -48,10 +48,9 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousInit() {
-        // schedule the autonomous command (example)
-        wheelPickup.startCompressor();
-        catapult.lock();
         if (autonomousCommand != null) autonomousCommand.start();
+        catapult.lock();
+        wheelPickup.startCompressor();
     }
 
     /**
@@ -67,8 +66,8 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-        wheelPickup.startCompressor();
         teleopCommand.start();
+        wheelPickup.startCompressor();
     }
 
     /**

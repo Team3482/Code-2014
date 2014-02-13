@@ -21,7 +21,6 @@ public class  RunWheels extends Command {
     protected void execute() {
         //sets the ball intake wheels to forward (1)
         Robot.wheelPickup.forwardWheels();
-        System.out.println("Run wheels forward");
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -33,7 +32,6 @@ public class  RunWheels extends Command {
     protected void end() {
         //stops the ball intake wheels from running
         Robot.wheelPickup.stopWheels();
-        System.out.println("Stop wheels");
     }
 
     // Called when another command which requires one or more of the same

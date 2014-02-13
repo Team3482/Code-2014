@@ -76,7 +76,6 @@ public class Chassis extends Subsystem {
     //stops the robot
     public void stop() {
         robotDrive.stopMotor();
-        Robot.wheelPickup.stopCompressor();
     }
     //sets the safety
     public void setSafety(boolean n) {

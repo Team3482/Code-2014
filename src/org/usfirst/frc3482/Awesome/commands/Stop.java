@@ -21,6 +21,7 @@ public class Stop extends Command {
     protected void execute() {
         //stops the robot
         Robot.chassis.stop();
+        Robot.wheelPickup.stopCompressor();
         isFinished = true;
     }
 

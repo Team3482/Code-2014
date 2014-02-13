@@ -30,9 +30,6 @@ public class RobotMap {
         cylinderCatapultLock = new DoubleSolenoid(5, 6);
         cylinderCatapultRelease = new DoubleSolenoid(7, 8);
         
-        wheelPickupSpike = new Relay(1, 5);
-	LiveWindow.addActuator("Wheel Pickup", "Spike", wheelPickupSpike);
-        
         wheelPickupWheels = new Talon(1, 6);
 	LiveWindow.addActuator("Wheel Pickup", "Wheels", (Talon) wheelPickupWheels);
         
