@@ -28,8 +28,8 @@ public class AutoShoot extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         try {
+            System.out.println("Processing image");
             Robot.camera.processImage();
-            System.out.println("Processed image");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

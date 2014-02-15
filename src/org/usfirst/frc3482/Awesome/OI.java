@@ -59,7 +59,7 @@ public class OI {
         
         stopButton = new JoystickButton(joystick, 8);
         stopButton.whenPressed(new Stop());
-        loadButton = new JoystickButton(joystick, 2);
+        loadButton = new JoystickButton(joystick, 4);
         loadButton.whileHeld(new Load());
         passButton = new JoystickButton(joystick, 1);
         passButton.whileHeld(new Pass());
@@ -67,7 +67,7 @@ public class OI {
         pullBackButton.whenPressed(new PullBack());
         aimButton = new JoystickButton(joystick, 6);
         aimButton.whileHeld(new Aim());
-        shootButton = new JoystickButton(joystick, 4);
+        shootButton = new JoystickButton(joystick, 2);
         shootButton.whenPressed(new Shoot());
 
 	    

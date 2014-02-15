@@ -17,15 +17,17 @@ public class Camera extends Subsystem {
     AxisCamera cam;
     ColorImage img;
     BinaryImage filtered;
+    BinaryImage filteredSmall;
+    BinaryImage filteredHull;
     // vison processing constants
-    final int HUE_LOW =115;
-    final int HUE_HIGH = 140;
-    final int SATURATION_LOW = 215;
+    final int HUE_LOW = 107;
+    final int HUE_HIGH = 148;
+    final int SATURATION_LOW = 226;
     final int SATURATION_HIGH = 255;
-    final int VALUE_LOW = 215;
+    final int VALUE_LOW = 188;
     final int VALUE_HIGH = 255;
     final int EROSIONS = 3;
-    final double IDEAL_ASPECT_RATIO_VERTICAL = 4/32;
+    final double IDEAL_ASPECT_RATIO_VERTICAL = 4.0/32;
     final double IDEAL_ASPECT_RATIO_HORIZONTAL = 23.5/4;
     // Camera constants
     final String IP_ADDRESS = "10.34.82.11";
@@ -44,6 +46,10 @@ public class Camera extends Subsystem {
     final int NEITHER = 0;
     final int VERTICAL = 1;
     final int HORIZONTAL = -1;
+    
+    int[] result;
+    public boolean foundVertical = false;
+    public boolean foundHorizontal = false;
     
     public void initDefaultCommand() {
 	
@@ -84,46 +90,46 @@ public class Camera extends Subsystem {
         // determine whether image is hot or not; whether veritcal target is in
         // the area (determined by the pixel ratio from horizontal target that is always there)
         // return hot or not
-        boolean verticalFound = false;
-        boolean horizontalFound = false;
         img = cam.getImage();
         img.write("/tmp/original.png");
         filtered = img.thresholdHSV(HUE_LOW, HUE_HIGH, SATURATION_LOW, SATURATION_HIGH, VALUE_LOW, VALUE_HIGH);
         filtered.write("/tmp/filtered.png");
-        filtered = filtered.removeSmallObjects(true, EROSIONS);
-        filtered.write("/tmp/size_filtered.png");
-        filtered = filtered.convexHull(false);
-        filtered.write("/tmp/convex_hull_filtered.png");
-        double[] temp = getTargetTypes(filtered);
-        for(int i=0;i<temp.length;i++) {
-            System.out.println(temp[i]);
-            if (temp[i] == VERTICAL) {
-                verticalFound = true;
+        filteredSmall = filtered.removeSmallObjects(true, EROSIONS);
+        filteredSmall.write("/tmp/size_filtered.png");
+        filteredHull = filtered.convexHull(false);
+        filteredHull.write("/tmp/convex_hull_filtered.png");
+        result = getTargetTypes(filtered);
+        freeMemory();
+        /*for(int i=0;i<result.length;i++) {
+            if (result[i] == VERTICAL) {
+                foundVertical = true;
             }
-            else if (temp[i] == HORIZONTAL) {
-                horizontalFound = true;
-            }   
-        }
-        if (verticalFound && horizontalFound){
-            
-        } else{
-            
-        }
+            else if (result[i] == HORIZONTAL) {
+                foundHorizontal = true;
+            }
+        }*/
     }
     
-    private double[] getTargetTypes(BinaryImage img) throws NIVisionException {
+    private int[] getTargetTypes(BinaryImage img) throws NIVisionException {
        // returns array of target types in the image
        ParticleAnalysisReport[] blobs = img.getOrderedParticleAnalysisReports();
-       double[] scoredBlobs = new double[blobs.length];
+       int[] scoredBlobs = new int[blobs.length];
        for(int i = 0; i < blobs.length; i++) {
            int boundingBoxArea = blobs[i].boundingRectHeight * blobs[i].boundingRectWidth;
            double blobArea = blobs[i].particleArea;
            double rectangularity = (blobArea / boundingBoxArea) * 100;
            // score that describes the similarity in aspect ratio between the blob and the ideal target 
-           double aspectRatio = (blobs[i].boundingRectWidth / blobs[i].boundingRectHeight);
-           double percentDifferenceVertical = ((IDEAL_ASPECT_RATIO_VERTICAL-aspectRatio)/IDEAL_ASPECT_RATIO_VERTICAL)*100;
-           double percentDifferenceHorizontal = ((IDEAL_ASPECT_RATIO_HORIZONTAL-aspectRatio)/IDEAL_ASPECT_RATIO_HORIZONTAL)*100;
+           double aspectRatio = ((double)blobs[i].boundingRectWidth / (double)blobs[i].boundingRectHeight);
+           System.out.println("vertical perfect: " + IDEAL_ASPECT_RATIO_VERTICAL);
+           System.out.println("aspect ratio: " + aspectRatio);
+           double percentDifferenceVertical = (Math.abs(IDEAL_ASPECT_RATIO_VERTICAL-aspectRatio)/IDEAL_ASPECT_RATIO_VERTICAL)*100;
+           System.out.println("vertical percent: " + percentDifferenceVertical);
+           double percentDifferenceHorizontal = (Math.abs(IDEAL_ASPECT_RATIO_HORIZONTAL-aspectRatio)/IDEAL_ASPECT_RATIO_HORIZONTAL)*100;
+           System.out.println("horizontal percent: " + percentDifferenceHorizontal);
            //check if it is a vertical target, horizontal target or neither
+           /*double aspectRatio = 
+           double percentDifferenceVertical = 
+           double percentDifferenceHorizontal = */
            int targetType = 2;
            if(rectangularity > 75) {
                if(percentDifferenceVertical < 25) {
@@ -131,17 +137,20 @@ public class Camera extends Subsystem {
                }
                else if(percentDifferenceHorizontal < 25) {
                    targetType = HORIZONTAL;
-               } else {
-                   targetType = NEITHER;
                }
+           } else {
+                targetType = NEITHER;
            }
            scoredBlobs[i] = targetType;
         }
        return scoredBlobs;
     }
     
-    public void freeMemory() {
-        //TODO: Free memory
+    public void freeMemory() throws NIVisionException {
+        img.free();
+        filtered.free();
+        filteredSmall.free();
+        filteredHull.free();
     }
     
     public double getDistance() {

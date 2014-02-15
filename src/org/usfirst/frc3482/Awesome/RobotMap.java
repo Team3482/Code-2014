@@ -9,6 +9,7 @@ public class RobotMap {
     public static DigitalInput catapultSensor;
     public static Compressor wheelPickupCompressor;
     public static DoubleSolenoid cylinderArm;
+    public static DoubleSolenoid cylinderArmBack;
     public static Relay wheelPickupSpike;
     public static SpeedController wheelPickupWheels;
     public static SpeedController catapultPull;
@@ -27,8 +28,10 @@ public class RobotMap {
         wheelPickupCompressor = new Compressor(1, 1);
 	
         cylinderArm = new DoubleSolenoid(1, 2);
+        cylinderArmBack = new DoubleSolenoid(3, 4);
         cylinderCatapultLock = new DoubleSolenoid(5, 6);
         cylinderCatapultRelease = new DoubleSolenoid(7, 8);
+        
         
         wheelPickupWheels = new Talon(1, 6);
 	LiveWindow.addActuator("Wheel Pickup", "Wheels", (Talon) wheelPickupWheels);
@@ -51,7 +54,8 @@ public class RobotMap {
         chassisRobotDrive = new RobotDrive(chassisDriveFrontLeft, chassisDriveBackLeft,
         chassisDriveFrontRight, chassisDriveBackRight);
 	
-        chassisRobotDrive.setSafetyEnabled(true);
+        // TODO: toggle the saftey for testing
+        chassisRobotDrive.setSafetyEnabled(false);
         chassisRobotDrive.setExpiration(0.1);
         chassisRobotDrive.setSensitivity(0.5);
         chassisRobotDrive.setMaxOutput(1.0);
