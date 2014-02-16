@@ -4,10 +4,11 @@
  */
 package org.usfirst.frc3482.Awesome.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc3482.Awesome.Robot;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class AutoShoot extends Command {
+public class AutoShoot extends CommandGroup {
         
     public AutoShoot() {
         // Use requires() here to declare subsystem dependencies
@@ -29,7 +30,11 @@ public class AutoShoot extends Command {
     protected void execute() {
         try {
             System.out.println("Processing image");
-            Robot.camera.processImage();
+            if (Robot.camera.processImage()) {
+                addSequential(new PullBack());
+            } else {
+                Timer.delay(5);
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

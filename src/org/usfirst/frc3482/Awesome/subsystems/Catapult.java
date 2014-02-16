@@ -34,7 +34,7 @@ public class Catapult extends Subsystem {
         return catapultLimit.get();
     }
     
-    //TODO:edit function names
+    //TODO: edit function names
     
     //locks the catapult via pistons (clutch)
     public void lock() {

@@ -3,9 +3,11 @@ package org.usfirst.frc3482.Awesome.subsystems;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.*;
-import org.usfirst.frc3482.Awesome.Robot;
 import org.usfirst.frc3482.Awesome.RobotMap;
 import org.usfirst.frc3482.Awesome.commands.*;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDOutput;
 
 public class Chassis extends Subsystem {
     SpeedController driveFrontRight = RobotMap.chassisDriveFrontRight;
@@ -80,6 +82,22 @@ public class Chassis extends Subsystem {
     //sets the safety
     public void setSafety(boolean n) {
         robotDrive.setSafetyEnabled(n);
+    }
+    public double getDistance() {
+        // return distance in inches
+        System.out.println(RobotMap.ultrasonicSensor.getVoltage());
+        double scalingFactor = 5.0/512;//volts/inch
+        return RobotMap.ultrasonicSensor.getVoltage()/scalingFactor;
+    }
+    public class DistancePIDSource implements PIDSource {
+        public double pidGet() {
+            return getDistance();
+        }
+    }
+    public class DistancePIDOutput implements PIDOutput {
+        public void pidWrite(double output) {
+            move(output, 0.0);
+        }
     }
 }
 

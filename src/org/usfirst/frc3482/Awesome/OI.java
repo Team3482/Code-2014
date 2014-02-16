@@ -44,43 +44,79 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
 
     
-    public JoystickButton shootButton;
+    public Trigger shootTrigger;
+    public Trigger pullBackTrigger;
     public JoystickButton aimButton;
-    public JoystickButton pullBackButton;
-    public JoystickButton runWheelsButton;
-    public JoystickButton passButton;
-    public JoystickButton loadButton;
+    public JoystickButton frontPassButton;
+    public JoystickButton backPassButton;
+    public JoystickButton loadFrontButton;
+    public JoystickButton loadBackButton;
     public JoystickButton stopButton;
     public Joystick joystick;
 
     public OI() {
-
+        // xbox controller
         joystick = new Joystick(1);
         
-        stopButton = new JoystickButton(joystick, 8);
+        // axis 9 is left trigger
+        // axis 10 is right trigger
+        class XboxTrigger extends Trigger {
+            Joystick controller;
+            double threshold;
+            int axis;
+            public XboxTrigger(Joystick c, boolean rightTrigger, double triggerThreshold) {
+                controller = c;
+                threshold = triggerThreshold;
+                if(rightTrigger) {
+                    axis = 10;
+                } else {
+                    axis = 9;
+                }
+            }
+            public boolean get() {
+                if(controller.getRawAxis(axis) >= threshold) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        // stop      - back button
+        // loadFront - right bumper: this extends the front and keeps it there
+        // loadBack  - left bumper: this retracts the front
+        // frontPass - a
+        // backPass  - b
+        // pullBack  - left trigger TODO
+        // aim       - right stick press
+        // shoot     - right trigger TODO
+        stopButton = new JoystickButton(joystick, 7);
         stopButton.whenPressed(new Stop());
-        loadButton = new JoystickButton(joystick, 4);
-        loadButton.whileHeld(new Load());
-        passButton = new JoystickButton(joystick, 1);
-        passButton.whileHeld(new Pass());
-        pullBackButton = new JoystickButton(joystick, 3);
-        pullBackButton.whenPressed(new PullBack());
-        aimButton = new JoystickButton(joystick, 6);
-        aimButton.whileHeld(new Aim());
-        shootButton = new JoystickButton(joystick, 2);
-        shootButton.whenPressed(new Shoot());
-
+        loadFrontButton = new JoystickButton(joystick, 6);
+        loadFrontButton.whileHeld(new LoadFront());
+        loadBackButton = new JoystickButton(joystick, 5);
+        loadBackButton.whileHeld(new LoadBack());
+        frontPassButton = new JoystickButton(joystick, 1);
+        frontPassButton.whileHeld(new FrontPass());
+        backPassButton = new JoystickButton(joystick, 2);
+        backPassButton.whileHeld(new BackPass());
+        pullBackTrigger = new XboxTrigger(joystick, false, 0.5);
+        pullBackTrigger.whileActive(new PullBack());
+	shootTrigger = new XboxTrigger(joystick, true, 0.5);
+        shootTrigger.whileActive(new Shoot());
+        aimButton = new JoystickButton(joystick, 10);
+        aimButton.whenPressed(new Aim());
+        
 	    
         // SmartDashboard Buttons
         SmartDashboard.putData("Autonomous", new Autonomous());
 
         SmartDashboard.putData("Drive", new Drive());
 
-        SmartDashboard.putData("Pass", new Pass());
+        SmartDashboard.putData("Pass", new FrontPass());
 
-        SmartDashboard.putData("Run Wheels", new RunWheels());
+        SmartDashboard.putData("Run Wheels", new RunFrontWheels());
 
-        SmartDashboard.putData("Load", new Load());
+        SmartDashboard.putData("Load", new LoadFront());
 
         SmartDashboard.putData("Aim", new Aim());
 

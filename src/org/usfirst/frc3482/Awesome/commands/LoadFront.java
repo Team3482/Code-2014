@@ -1,17 +1,20 @@
+
 package org.usfirst.frc3482.Awesome.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc3482.Awesome.Robot;
 
-public class  Pass extends Command {
-    // Runs wheels on top of rolling intake in reverse of RunWheels.java to 
-    // propel ball out of robot
-    // Opposite of RunWheels.java
-    public Pass() {
+// Extends CommandGroup in order to be able to drive at the same time
+public class  LoadFront extends CommandGroup {
+
+    public LoadFront() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-	
         requires(Robot.wheelPickup);
+        // allow driving to happen while load executes
+        addParallel(new Drive());
+        // run the wheels while loading
+        addParallel(new RunFrontWheels());
     }
 
     // Called just before this Command runs the first time
@@ -20,10 +23,8 @@ public class  Pass extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        //TODO: make needed checks
-        //sets the ball intake wheels to reverse (-1)
-        Robot.wheelPickup.reverseWheels();
-        System.out.println("Running wheels backward");
+        //extends the pistons for the wheel pickup system
+        Robot.wheelPickup.extendFrontArm();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -33,9 +34,8 @@ public class  Pass extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-        //stops the ball intake wheels from running
-        Robot.wheelPickup.stopWheels();
-        System.out.println("Stop wheels");
+        //retracts and sets the pistons off for the wheel pickup system
+        Robot.wheelPickup.retractFrontArm();
     }
 
     // Called when another command which requires one or more of the same

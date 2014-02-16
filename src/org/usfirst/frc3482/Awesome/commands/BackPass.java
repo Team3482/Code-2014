@@ -1,33 +1,33 @@
-
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package org.usfirst.frc3482.Awesome.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc3482.Awesome.Robot;
-
-// Extends CommandGroup in order to be able to drive at the same time
-public class  Load extends CommandGroup {
-
-    public Load() {
+/**
+ *
+ * @author
+ * Westmont
+ * Robotics
+ */
+public class BackPass extends Command {
+    
+    public BackPass() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(Robot.wheelPickup);
-        
-        // allow driving to happen while load executes
-        addParallel(new Drive());
-        // run the wheels while loading
-        addParallel(new RunWheels());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.wheelPickup.retract();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        //extends the pistons for the wheel pickup system
-        Robot.wheelPickup.extend();
+        Robot.wheelPickup.reverseBackWheels();  
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -37,13 +37,11 @@ public class  Load extends CommandGroup {
 
     // Called once after isFinished returns true
     protected void end() {
-        //retracts and sets the pistons off for the wheel pickup system
-        Robot.wheelPickup.retract();
+        Robot.wheelPickup.stopBackWheels();  
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        end();
     }
 }

@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class WheelPickup extends Subsystem {
 
     Compressor compressor = RobotMap.wheelPickupCompressor;
-    DoubleSolenoid cylinderArm = RobotMap.cylinderArm;
-    SpeedController wheels = RobotMap.wheelPickupWheels;
-    
-    boolean isCompressing = false;
+    DoubleSolenoid cylinderArmFront = RobotMap.cylinderArmFront;
+    DoubleSolenoid cylinderArmBack = RobotMap.cylinderArmBack;
+    SpeedController frontWheels = RobotMap.wheelPickupFrontWheels;
+    SpeedController backWheels = RobotMap.wheelPickupBackWheels;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -21,44 +21,68 @@ public class WheelPickup extends Subsystem {
 	
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-        retract();
+        retractFrontArm();
+        retractBackArm();
     }
     
-    //stops running the intake wheels
-    public void stopWheels() {
-        wheels.set(0.0);
+    //stops running the front intake wheels
+    public void stopFrontWheels() {
+        frontWheels.set(0.0);
     }
-    //starts running the intake wheels - forward
-    public void forwardWheels() {
-        wheels.set(1.0);
+    //starts running the front intake wheels - forward
+    public void forwardFrontWheels() {
+        frontWheels.set(1.0);
     }
-    //starts running the intake wheels - reverse
-    public void reverseWheels() {
-        wheels.set(-1.0);
+    //starts running the front intake wheels - reverse
+    public void reverseFrontWheels() {
+        frontWheels.set(-1.0);
+    }
+    // stops running back intake wheels
+    public void stopBackWheels() {
+        backWheels.set(0.0);
+    }
+    //starts running the back intake wheels - forward
+    public void forwardBackWheels() {
+        backWheels.set(1.0);
+    }
+    //starts running the back intake wheels - reverse
+    public void reverseBackWheels() {
+        backWheels.set(-1.0);
     }
     
     //starts the compressor
     public void startCompressor() {
-        if(!isCompressing) {
-            compressor.start();
-        }
+        compressor.start();
     }
     //stops the compressor
     public void stopCompressor() {
         compressor.stop();
-        isCompressing = false;
     }
     //extends the wheel intake pistons
-    public void extend() {
-        cylinderArm.set(DoubleSolenoid.Value.kForward);
+    public void extendFrontArm() {
+        cylinderArmFront.set(DoubleSolenoid.Value.kForward);
     }
     //retracts the wheel intake pistons
-    public void retract() {
-        cylinderArm.set(DoubleSolenoid.Value.kReverse);
+    public void retractFrontArm() {
+        cylinderArmFront.set(DoubleSolenoid.Value.kReverse);
+    }
+    
+    //extends the wheel intake pistons
+    public void extendBackArm() {
+        cylinderArmBack.set(DoubleSolenoid.Value.kForward);
+    }
+    //retracts the wheel intake pistons
+    public void retractBackArm() {
+        cylinderArmBack.set(DoubleSolenoid.Value.kReverse);
     }
     //turns off the wheel intake pistons
-    public void turnOff() {
-        cylinderArm.set(DoubleSolenoid.Value.kOff);
+    public void turnOffFrontArm() {
+        cylinderArmFront.set(DoubleSolenoid.Value.kOff);
+    }
+    
+    //turns off the wheel intake pistons
+    public void turnOffBackArm() {
+        cylinderArmBack.set(DoubleSolenoid.Value.kOff);
     }
     
 }

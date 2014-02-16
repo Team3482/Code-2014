@@ -7,11 +7,13 @@ import java.util.Vector;
 
 public class RobotMap {
     public static DigitalInput catapultSensor;
+    public static AnalogChannel ultrasonicSensor;
     public static Compressor wheelPickupCompressor;
-    public static DoubleSolenoid cylinderArm;
+    public static DoubleSolenoid cylinderArmFront;
     public static DoubleSolenoid cylinderArmBack;
     public static Relay wheelPickupSpike;
-    public static SpeedController wheelPickupWheels;
+    public static SpeedController wheelPickupFrontWheels;
+    public static SpeedController wheelPickupBackWheels;
     public static SpeedController catapultPull;
     public static DoubleSolenoid cylinderCatapultLock;
     public static DoubleSolenoid cylinderCatapultRelease;
@@ -24,17 +26,22 @@ public class RobotMap {
     
     public static void init() {
         catapultSensor = new DigitalInput(2);
+        //TODO: fix ultrasonic sensor allocation error
+        //ultrasonicSensor = new AnalogChannel(3);
         
         wheelPickupCompressor = new Compressor(1, 1);
 	
-        cylinderArm = new DoubleSolenoid(1, 2);
+        cylinderArmFront = new DoubleSolenoid(1, 2);
         cylinderArmBack = new DoubleSolenoid(3, 4);
         cylinderCatapultLock = new DoubleSolenoid(5, 6);
         cylinderCatapultRelease = new DoubleSolenoid(7, 8);
         
         
-        wheelPickupWheels = new Talon(1, 6);
-	LiveWindow.addActuator("Wheel Pickup", "Wheels", (Talon) wheelPickupWheels);
+        wheelPickupFrontWheels = new Talon(1, 6);
+	LiveWindow.addActuator("Wheel Pickup", "Wheels", (Talon) wheelPickupFrontWheels);
+        
+        wheelPickupBackWheels = new Talon(1, 7);
+	LiveWindow.addActuator("Wheel Pickup", "Wheels", (Talon) wheelPickupBackWheels);
         
         catapultPull = new Talon(1, 5);
 	LiveWindow.addActuator("Catapult", "Pull", (Talon) catapultPull);
@@ -54,8 +61,7 @@ public class RobotMap {
         chassisRobotDrive = new RobotDrive(chassisDriveFrontLeft, chassisDriveBackLeft,
         chassisDriveFrontRight, chassisDriveBackRight);
 	
-        // TODO: toggle the saftey for testing
-        chassisRobotDrive.setSafetyEnabled(false);
+        chassisRobotDrive.setSafetyEnabled(true);
         chassisRobotDrive.setExpiration(0.1);
         chassisRobotDrive.setSensitivity(0.5);
         chassisRobotDrive.setMaxOutput(1.0);

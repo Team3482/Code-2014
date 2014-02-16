@@ -1,14 +1,16 @@
 package org.usfirst.frc3482.Awesome.subsystems;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import org.usfirst.frc3482.Awesome.RobotMap;
 import org.usfirst.frc3482.Awesome.commands.*;
 import edu.wpi.first.wpilibj.camera.*;
 import edu.wpi.first.wpilibj.image.*;
 import java.lang.Math;
 import org.usfirst.frc3482.Awesome.Robot;
-
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.Counter;
 
 public class Camera extends Subsystem {
     
@@ -19,6 +21,7 @@ public class Camera extends Subsystem {
     BinaryImage filtered;
     BinaryImage filteredSmall;
     BinaryImage filteredHull;
+    Ultrasonic distanceSensor;
     // vison processing constants
     final int HUE_LOW = 107;
     final int HUE_HIGH = 148;
@@ -48,8 +51,8 @@ public class Camera extends Subsystem {
     final int HORIZONTAL = -1;
     
     int[] result;
-    public boolean foundVertical = false;
-    public boolean foundHorizontal = false;
+    private boolean foundVertical = false;
+    private boolean foundHorizontal = false;
     
     public void initDefaultCommand() {
 	
@@ -83,7 +86,7 @@ public class Camera extends Subsystem {
         cam.writeWhiteBalance(WHITE_BALANCE);
     }
     
-    public void processImage() throws AxisCameraException, NIVisionException {
+    public boolean processImage() throws AxisCameraException, NIVisionException {
         // get image from camera and filter it according to size and color so it
         // shows retroflective tape only
         // then convert it to a binary image
@@ -98,16 +101,21 @@ public class Camera extends Subsystem {
         filteredSmall.write("/tmp/size_filtered.png");
         filteredHull = filtered.convexHull(false);
         filteredHull.write("/tmp/convex_hull_filtered.png");
-        result = getTargetTypes(filtered);
+        result = getTargetTypes(filteredHull);
         freeMemory();
-        /*for(int i=0;i<result.length;i++) {
+        for(int i=0;i<result.length;i++) {
             if (result[i] == VERTICAL) {
                 foundVertical = true;
             }
             else if (result[i] == HORIZONTAL) {
                 foundHorizontal = true;
             }
-        }*/
+        }
+        if (foundVertical && foundHorizontal){
+            return true;
+        } else {
+            return false;
+        }
     }
     
     private int[] getTargetTypes(BinaryImage img) throws NIVisionException {
@@ -151,18 +159,6 @@ public class Camera extends Subsystem {
         filtered.free();
         filteredSmall.free();
         filteredHull.free();
-    }
-    
-    public double getDistance() {
-        // TODO: Find Distance To Target
-        // M1013 has horizontal viewing angle of 67 degrees (2 theta)
-        // use FOV, theta, w, T to find d
-        // Tft/Tpixel = FOVft/FOVpixxel and FOVft = 2w = 2dtan(theta)
-        // d = Tft*FOVpixel/(2Tpixeltan(theta))
-        //https://wpilib.screenstepslive.com/s/3120/m/8731/l/90361-identifying-and-processing-the-targets
-        double d=0.0;
-        return d;
-        //TODO: calibrate camera & code
     }
 }
 
