@@ -44,8 +44,10 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
 
     
-    public Trigger shootTrigger;
-    public Trigger pullBackTrigger;
+    //public Trigger shootTrigger;
+    //public Trigger pullBackTrigger;
+    public JoystickButton shootButton;
+    public JoystickButton pullBackButton;
     public JoystickButton aimButton;
     public JoystickButton frontPassButton;
     public JoystickButton backPassButton;
@@ -74,6 +76,7 @@ public class OI {
                 }
             }
             public boolean get() {
+                System.out.println(controller.getRawAxis(axis));
                 if(controller.getRawAxis(axis) >= threshold) {
                     return true;
                 } else {
@@ -86,9 +89,9 @@ public class OI {
         // loadBack  - left bumper: this retracts the front
         // frontPass - a
         // backPass  - b
-        // pullBack  - left trigger TODO
+        // pullBack  - left trigger TODO | actually x right now
         // aim       - right stick press
-        // shoot     - right trigger TODO
+        // shoot     - right trigger TODO | actually y right now
         stopButton = new JoystickButton(joystick, 7);
         stopButton.whenPressed(new Stop());
         loadFrontButton = new JoystickButton(joystick, 6);
@@ -99,10 +102,10 @@ public class OI {
         frontPassButton.whileHeld(new FrontPass());
         backPassButton = new JoystickButton(joystick, 2);
         backPassButton.whileHeld(new BackPass());
-        pullBackTrigger = new XboxTrigger(joystick, false, 0.5);
-        pullBackTrigger.whileActive(new PullBack());
-	shootTrigger = new XboxTrigger(joystick, true, 0.5);
-        shootTrigger.whileActive(new Shoot());
+        pullBackButton = new JoystickButton(joystick, 3);
+        pullBackButton.whileHeld(new PullBack());
+	shootButton = new JoystickButton(joystick, 4);
+        shootButton.whileHeld(new Shoot());
         aimButton = new JoystickButton(joystick, 10);
         aimButton.whenPressed(new Aim());
         

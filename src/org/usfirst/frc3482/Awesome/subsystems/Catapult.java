@@ -9,14 +9,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Catapult extends Subsystem {    
     SpeedController pull = RobotMap.catapultPull;
     DigitalInput catapultLimit = RobotMap.catapultSensor;
-    DoubleSolenoid cylinderLock = RobotMap.cylinderCatapultLock;
-    DoubleSolenoid cylinderRelease = RobotMap.cylinderCatapultRelease;
+    DoubleSolenoid cylinderClutch = RobotMap.cylinderCatapultClutch;
+    DoubleSolenoid cylinderRatchet = RobotMap.cylinderCatapultRatchet;
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-	
+	engageClutch();
+        disengageRatchet();
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
@@ -34,22 +35,16 @@ public class Catapult extends Subsystem {
         return catapultLimit.get();
     }
     
-    //TODO: edit function names
-    
-    //locks the catapult via pistons (clutch)
-    public void lock() {
-        cylinderLock.set(DoubleSolenoid.Value.kForward);
+    public void engageClutch() {
+        cylinderClutch.set(DoubleSolenoid.Value.kForward);
     }
-    //unlocks the catapult via pistons (clutch)
-    public void unlock() {
-        cylinderLock.set(DoubleSolenoid.Value.kReverse);
+    public void disengageClutch() {
+        cylinderClutch.set(DoubleSolenoid.Value.kReverse);
     }
-    //releases the catapult via piston (ratchet)
-    public void releaseOpen() {
-        cylinderRelease.set(DoubleSolenoid.Value.kForward);
+    public void disengageRatchet() {
+        cylinderRatchet.set(DoubleSolenoid.Value.kForward);
     }
-    //closes the catapult release via piston (ratchet)
-    public void releaseClose() {
-        cylinderRelease.set(DoubleSolenoid.Value.kReverse);
+    public void engageRatchet() {
+        cylinderRatchet.set(DoubleSolenoid.Value.kReverse);
     }
 }

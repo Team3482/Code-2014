@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         if (autonomousCommand != null) autonomousCommand.start();
-        catapult.lock();
+        catapult.engageClutch();
         wheelPickup.startCompressor();
     }
 

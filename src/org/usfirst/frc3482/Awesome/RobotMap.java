@@ -15,8 +15,8 @@ public class RobotMap {
     public static SpeedController wheelPickupFrontWheels;
     public static SpeedController wheelPickupBackWheels;
     public static SpeedController catapultPull;
-    public static DoubleSolenoid cylinderCatapultLock;
-    public static DoubleSolenoid cylinderCatapultRelease;
+    public static DoubleSolenoid cylinderCatapultClutch;
+    public static DoubleSolenoid cylinderCatapultRatchet;
     public static SpeedController chassisDriveFrontRight;
     public static SpeedController chassisDriveFrontLeft;
     public static SpeedController chassisDriveBackRight;
@@ -33,8 +33,8 @@ public class RobotMap {
 	
         cylinderArmFront = new DoubleSolenoid(1, 2);
         cylinderArmBack = new DoubleSolenoid(3, 4);
-        cylinderCatapultLock = new DoubleSolenoid(5, 6);
-        cylinderCatapultRelease = new DoubleSolenoid(7, 8);
+        cylinderCatapultClutch = new DoubleSolenoid(5, 6);
+        cylinderCatapultRatchet = new DoubleSolenoid(7, 8);
         
         
         wheelPickupFrontWheels = new Talon(1, 6);
