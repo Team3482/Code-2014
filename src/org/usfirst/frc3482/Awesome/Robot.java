@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-	RobotMap.init();
+		RobotMap.init();
         wheelPickup = new WheelPickup();
         catapult = new Catapult();
         chassis = new Chassis();
@@ -68,6 +68,10 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
         teleopCommand.start();
         wheelPickup.startCompressor();
+		
+		/*while(humans_still_alive) {
+			kill(humans);
+		}*/
     }
 
     /**

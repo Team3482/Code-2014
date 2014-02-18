@@ -1,5 +1,6 @@
 package org.usfirst.frc3482.Awesome.subsystems;
 
+import com.sun.squawk.util.Arrays;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.*;
@@ -15,6 +16,9 @@ public class Chassis extends Subsystem {
     SpeedController driveBackRight = RobotMap.chassisDriveBackRight;
     SpeedController driveBackLeft = RobotMap.chassisDriveBackLeft;
     RobotDrive robotDrive = RobotMap.chassisRobotDrive;
+	
+	public DistancePIDSource distancePIDSource = new DistancePIDSource();
+	public DistancePIDOutput distancePIDOutput = new DistancePIDOutput();
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -85,9 +89,15 @@ public class Chassis extends Subsystem {
     }
     public double getDistance() {
         // return distance in inches
-        System.out.println(RobotMap.ultrasonicSensor.getVoltage());
+        //System.out.println(RobotMap.ultrasonicSensor.getVoltage());
         double scalingFactor = 5.0/512;//volts/inch
-        return RobotMap.ultrasonicSensor.getVoltage()/scalingFactor;
+		//System.out.println("Distance: " + RobotMap.ultrasonicSensor.getVoltage()/scalingFactor);
+		double[] v = new double[100];
+		for(int i=0;i<100;i++) {
+			v[i] = RobotMap.ultrasonicSensor.getVoltage()/scalingFactor;
+		}
+		Arrays.sort(v);
+        return v[49];
     }
     public class DistancePIDSource implements PIDSource {
         public double pidGet() {

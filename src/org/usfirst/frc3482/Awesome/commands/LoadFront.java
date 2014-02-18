@@ -1,6 +1,8 @@
 
 package org.usfirst.frc3482.Awesome.commands;
 
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc3482.Awesome.Robot;
 
@@ -13,8 +15,7 @@ public class  LoadFront extends CommandGroup {
         requires(Robot.wheelPickup);
         // allow driving to happen while load executes
         addParallel(new Drive());
-        // run the wheels while loading
-        addParallel(new RunFrontWheels());
+		addParallel(new RunFrontWheels());
     }
 
     // Called just before this Command runs the first time

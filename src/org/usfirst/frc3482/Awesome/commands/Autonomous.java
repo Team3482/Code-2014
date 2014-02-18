@@ -23,15 +23,15 @@ public class  Autonomous extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-        requires(Robot.camera);
+        //requires(Robot.camera);
         requires(Robot.chassis);
-        addParallel(new PullBack());
+        //addParallel(new PullBack());
         addParallel(new Aim());
-        // System.out.println("Calling autoshoot");
-        // addSequential(new AutoShoot());
+        //System.out.println("Calling autoshoot");
+        //addSequential(new AutoShoot());
         // pulls back catapult and checks if goal is hot
         // If it is hot, shoot. If not, wait 5 seconds and then shoot
-        try {
+        /*try {
             System.out.println("Distance: " + Robot.chassis.getDistance());
             System.out.println("Processing image");
             if (Robot.camera.processImage()) {
@@ -42,7 +42,7 @@ public class  Autonomous extends CommandGroup {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
+        }*/
         /*addParallel(new PullBack());
         addSequential(new Aim());
         addSequential(new Shoot());

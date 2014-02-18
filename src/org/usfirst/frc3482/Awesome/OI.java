@@ -48,6 +48,7 @@ public class OI {
     //public Trigger pullBackTrigger;
     public JoystickButton shootButton;
     public JoystickButton pullBackButton;
+	public JoystickButton winchReverseButton;
     public JoystickButton aimButton;
     public JoystickButton frontPassButton;
     public JoystickButton backPassButton;
@@ -104,7 +105,9 @@ public class OI {
         backPassButton.whileHeld(new BackPass());
         pullBackButton = new JoystickButton(joystick, 3);
         pullBackButton.whileHeld(new PullBack());
-	shootButton = new JoystickButton(joystick, 4);
+		winchReverseButton = new JoystickButton(joystick, 8);
+		winchReverseButton.whileHeld(new ReverseWinch());
+	    shootButton = new JoystickButton(joystick, 4);
         shootButton.whileHeld(new Shoot());
         aimButton = new JoystickButton(joystick, 10);
         aimButton.whenPressed(new Aim());

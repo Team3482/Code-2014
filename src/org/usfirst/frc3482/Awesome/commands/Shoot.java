@@ -31,6 +31,7 @@ public class  Shoot extends CommandGroup {
             //TODO: call pullback
         }*/
         Robot.catapult.disengageRatchet();
+		System.out.println("Ratchet disengaged");
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -40,8 +41,6 @@ public class  Shoot extends CommandGroup {
 
     // Called once after isFinished returns true
     protected void end() {
-        Timer.delay(0.5);
-        Robot.catapult.engageClutch();
     }
 
     // Called when another command which requires one or more of the same

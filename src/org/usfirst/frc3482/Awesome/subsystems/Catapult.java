@@ -16,8 +16,6 @@ public class Catapult extends Subsystem {
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-	engageClutch();
-        disengageRatchet();
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
@@ -26,6 +24,9 @@ public class Catapult extends Subsystem {
     public void startPull(){
         pull.set(1.0);
     }
+	public void reversePull(){
+		pull.set(-1.0);
+	}
     //stops pulling back the catapult with a motor
     public void stopPull(){
         pull.set(0.0);
@@ -34,17 +35,16 @@ public class Catapult extends Subsystem {
     public boolean isLimit() {
         return catapultLimit.get();
     }
-    
     public void engageClutch() {
         cylinderClutch.set(DoubleSolenoid.Value.kForward);
     }
     public void disengageClutch() {
         cylinderClutch.set(DoubleSolenoid.Value.kReverse);
     }
-    public void disengageRatchet() {
+    public void engageRatchet() {
         cylinderRatchet.set(DoubleSolenoid.Value.kForward);
     }
-    public void engageRatchet() {
-        cylinderRatchet.set(DoubleSolenoid.Value.kReverse);
-    }
+	public void disengageRatchet() {
+		cylinderRatchet.set(DoubleSolenoid.Value.kReverse);
+	}
 }

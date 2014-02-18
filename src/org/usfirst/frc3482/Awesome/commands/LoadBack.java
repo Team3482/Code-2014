@@ -4,14 +4,10 @@
  */
 package org.usfirst.frc3482.Awesome.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc3482.Awesome.Robot;
-/**
- *
- * @author
- * Westmont
- * Robotics
- */
 
 public class LoadBack extends CommandGroup {
     
@@ -22,7 +18,7 @@ public class LoadBack extends CommandGroup {
         // allow driving to happen while load executes
         addParallel(new Drive());
         // run the wheels while loading
-        addParallel(new RunBackWheels());
+		addParallel(new RunBackWheels());
     }
 
     // Called just before this Command runs the first time
@@ -32,7 +28,7 @@ public class LoadBack extends CommandGroup {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.wheelPickup.extendFrontArm();
+        Robot.wheelPickup.extendBackArm();
     }
 
     // Make this return true when this Command no longer needs to run execute()
