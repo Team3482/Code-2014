@@ -1,43 +1,31 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.usfirst.frc3482.Awesome.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import org.usfirst.frc3482.Awesome.Robot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc3482.Awesome.Robot;
 
-public class AutoShoot extends CommandGroup {
+// Extends CommandGroup in order to be able to drive at the same time
+public class Load extends CommandGroup {
 
-	public AutoShoot() {
+	public Load() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.camera);
+		requires(Robot.wheelPickup);
+		// allow driving to happen while load executes
+		addParallel(new Drive());
+		addParallel(new RunFrontWheels());
+		addParallel(new RunBackWheels());
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		try {
-			Robot.camera.initCamera();
-			System.out.println("Initialized Camera");
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		try {
-			System.out.println("Processing image");
-			if (Robot.camera.processImage()) {
-				addSequential(new PullBack());
-			} else {
-				Timer.delay(5);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		//extends the pistons for the wheel pickup system
+		Robot.wheelPickup.extendFrontArm();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -47,6 +35,8 @@ public class AutoShoot extends CommandGroup {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		//retracts and sets the pistons off for the wheel pickup system
+		Robot.wheelPickup.retractFrontArm();
 	}
 
 	// Called when another command which requires one or more of the same

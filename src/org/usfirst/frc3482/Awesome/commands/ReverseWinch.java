@@ -6,6 +6,7 @@ package org.usfirst.frc3482.Awesome.commands;
 
 import org.usfirst.frc3482.Awesome.Robot;
 import edu.wpi.first.wpilibj.command.Command;
+
 /**
  *
  * @author
@@ -13,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * Robotics
  */
 public class ReverseWinch extends Command {
-	
+
 	public ReverseWinch() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);

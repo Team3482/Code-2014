@@ -10,7 +10,6 @@ public class  Shoot extends CommandGroup {
     public Shoot() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-	
         requires(Robot.catapult);
     }
 
@@ -20,18 +19,11 @@ public class  Shoot extends CommandGroup {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        /*if(Robot.catapult.isLimit()) {
-            //unlocks the catapult via pistons
-            Robot.catapult.disengageClutch();
-            //allow time for piston to finish
-            Timer.delay(0.1);
-            //release the catapult via piston
-            Robot.catapult.disengageRatchet();
-        } else {
-            //TODO: call pullback
-        }*/
+		Robot.catapult.startPull();
         Robot.catapult.disengageRatchet();
-		System.out.println("Ratchet disengaged");
+		Robot.catapult.disengageClutch();
+		Timer.delay(0.5);
+		Robot.catapult.stopPull();
     }
 
     // Make this return true when this Command no longer needs to run execute()

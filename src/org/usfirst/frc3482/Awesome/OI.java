@@ -5,12 +5,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.buttons.*;
 
-
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	public class XboxController {
+		
+	}
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
     // You create one by telling it which joystick it's on and which button
@@ -45,7 +47,7 @@ public class OI {
 
     
     //public Trigger shootTrigger;
-    //public Trigger pullBackTrigger;
+    //public Trigger pullBackTrigger
     public JoystickButton shootButton;
     public JoystickButton pullBackButton;
 	public JoystickButton winchReverseButton;
@@ -53,9 +55,9 @@ public class OI {
     public JoystickButton frontPassButton;
     public JoystickButton backPassButton;
     public JoystickButton loadFrontButton;
-    public JoystickButton loadBackButton;
     public JoystickButton stopButton;
     public Joystick joystick;
+	
 
     public OI() {
         // xbox controller
@@ -96,9 +98,7 @@ public class OI {
         stopButton = new JoystickButton(joystick, 7);
         stopButton.whenPressed(new Stop());
         loadFrontButton = new JoystickButton(joystick, 6);
-        loadFrontButton.whileHeld(new LoadFront());
-        loadBackButton = new JoystickButton(joystick, 5);
-        loadBackButton.whileHeld(new LoadBack());
+        loadFrontButton.whileHeld(new Load());
         frontPassButton = new JoystickButton(joystick, 1);
         frontPassButton.whileHeld(new FrontPass());
         backPassButton = new JoystickButton(joystick, 2);
@@ -122,7 +122,7 @@ public class OI {
 
         SmartDashboard.putData("Run Wheels", new RunFrontWheels());
 
-        SmartDashboard.putData("Load", new LoadFront());
+        SmartDashboard.putData("Load", new Load());
 
         SmartDashboard.putData("Aim", new Aim());
 
@@ -135,6 +135,4 @@ public class OI {
         SmartDashboard.putData("Stop", new Stop());
 
     }
-
 }
-
