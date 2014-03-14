@@ -3,15 +3,13 @@ package org.usfirst.frc3482.Awesome;
 import edu.wpi.first.wpilibj.*;
 
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import java.util.Vector;
 
 public class RobotMap {
 
 	public static DigitalInput catapultSensor;
 	public static AnalogChannel ultrasonicSensor;
 	public static Compressor wheelPickupCompressor;
-	public static DoubleSolenoid cylinderArmFront;
-	public static DoubleSolenoid cylinderArmBack;
+	public static DoubleSolenoid cylinderArms;
 	public static Relay wheelPickupSpike;
 	public static SpeedController wheelPickupFrontWheels;
 	public static SpeedController wheelPickupBackWheels;
@@ -30,11 +28,11 @@ public class RobotMap {
 
 		wheelPickupCompressor = new Compressor(1, 1);
 
-		cylinderArmFront = new DoubleSolenoid(1, 2);
-		cylinderArmBack = new DoubleSolenoid(3, 4);
+		// Both pneumatic arms are connected to this solenoid:
+		cylinderArms = new DoubleSolenoid(1, 2);
+		//cylinderArmBack = new DoubleSolenoid(3, 4);
 		cylinderCatapultClutch = new DoubleSolenoid(5, 6);
 		cylinderCatapultRatchet = new DoubleSolenoid(7, 8);
-
 
 		wheelPickupFrontWheels = new Talon(1, 6);
 		LiveWindow.addActuator("Wheel Pickup", "Wheels", (Talon) wheelPickupFrontWheels);
@@ -58,7 +56,7 @@ public class RobotMap {
 		LiveWindow.addActuator("Chassis", "Drive Back Left", (Talon) chassisDriveBackLeft);
 
 		chassisRobotDrive = new RobotDrive(chassisDriveFrontLeft, chassisDriveBackLeft,
-				chassisDriveFrontRight, chassisDriveBackRight);
+			chassisDriveFrontRight, chassisDriveBackRight);
 
 		//chassisRobotDrive.setSafetyEnabled(true);
 		chassisRobotDrive.setSafetyEnabled(false);

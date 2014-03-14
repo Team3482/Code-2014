@@ -6,20 +6,17 @@ import org.usfirst.frc3482.Awesome.Robot;
 
 public class Move extends Command {
 
-	private boolean isFinished = false;
-	private double forward, turn, time;
+	private double forward = 0;
+	private double turn = 0;
+	private double time = 0;
 
 	public Move() {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-
+		// Declare subsystem dependency
 		requires(Robot.chassis);
-		forward = 0.0;
-		turn = 0.0;
-		time = 0.0;
 	}
 
 	public Move(double forward, double turn, double time) {
+		// Declare subsystem dependency
 		requires(Robot.chassis);
 		this.forward = forward;
 		this.turn = turn;
@@ -32,7 +29,7 @@ public class Move extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		//disabled saftey and moves to a location
+		//disabled safety and moves to a location
 		Robot.chassis.setSafety(false);
 		Robot.chassis.move(forward, turn);
 		//waits for a given time
@@ -40,12 +37,11 @@ public class Move extends Command {
 		//enables safety and stops
 		Robot.chassis.move(0.0, 0.0);
 		Robot.chassis.setSafety(true);
-		isFinished = true;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return isFinished;
+		return true;
 	}
 
 	// Called once after isFinished returns true

@@ -1,25 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.usfirst.frc3482.Awesome.commands;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc3482.Awesome.Robot;
 
-/**
- *
- * @author
- * Westmont
- * Robotics
- */
-public class Shoot2 extends Command {
+public class Pass extends CommandGroup {
 
-	public Shoot2() {
+	public Pass() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.catapult);
+
+		requires(Robot.wheelPickup);
+		addParallel(new Drive());
 	}
 
 	// Called just before this Command runs the first time
@@ -28,10 +19,8 @@ public class Shoot2 extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.catapult.startPull();
-		Robot.catapult.disengageRatchet();
-		Timer.delay(0.5);
-		Robot.catapult.stopPull();
+		//TODO: make needed checks (arms need to be up)
+		Robot.wheelPickup.expelForwards();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -41,10 +30,13 @@ public class Shoot2 extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		//stops the ball intake wheels from running
+		Robot.wheelPickup.stopWheels();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		end();
 	}
 }

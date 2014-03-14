@@ -7,15 +7,9 @@ package org.usfirst.frc3482.Awesome.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc3482.Awesome.Robot;
 
-/**
- *
- * @author
- * Westmont
- * Robotics
- */
-public class BackPass extends Command {
+public class RetrieveBall extends Command {
 
-	public BackPass() {
+	public RetrieveBall() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.wheelPickup);
@@ -27,8 +21,7 @@ public class BackPass extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.wheelPickup.reverseBackWheels();
-
+		Robot.wheelPickup.runWheelsInward();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -38,11 +31,12 @@ public class BackPass extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.wheelPickup.stopBackWheels();
+		Robot.wheelPickup.stopWheels();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		end();
 	}
 }

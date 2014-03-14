@@ -9,8 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class WheelPickup extends Subsystem {
 
 	Compressor compressor = RobotMap.wheelPickupCompressor;
-	DoubleSolenoid cylinderArmFront = RobotMap.cylinderArmFront;
-	DoubleSolenoid cylinderArmBack = RobotMap.cylinderArmBack;
+	DoubleSolenoid cylinderArms = RobotMap.cylinderArms;
 	SpeedController frontWheels = RobotMap.wheelPickupFrontWheels;
 	SpeedController backWheels = RobotMap.wheelPickupBackWheels;
 
@@ -20,77 +19,37 @@ public class WheelPickup extends Subsystem {
 		
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
-		retractFrontArm();
-		retractBackArm();
+		retractArms();
 	}
 
-	//stops running the front intake wheels
-	public void stopFrontWheels() {
-		frontWheels.set(0.0);
-	}
-	//starts running the front intake wheels - forward 
-
-	public void forwardFrontWheels() {
-		frontWheels.set(1.0);
-	}
-	//starts running the front intake wheels - reverse
-
-	public void reverseFrontWheels() {
-		frontWheels.set(-1.0);
-	}
-	// stops running back intake wheels
-
-	public void stopBackWheels() {
-		backWheels.set(0.0);
-	}
-	//starts running the back intake wheels - forward
-
-	public void forwardBackWheels() {
-		backWheels.set(1.0);
-	}
-	//starts running the back intake wheels - reverse
-
-	public void reverseBackWheels() {
-		backWheels.set(-1.0);
-	}
-
-	//starts the compressor
+	// Compressor Functions
 	public void startCompressor() {
 		compressor.start();
 	}
-	//stops the compressor
-
 	public void stopCompressor() {
 		compressor.stop();
 	}
-	//extends the wheel intake pistons
 
-	public void extendFrontArm() {
-		cylinderArmFront.set(DoubleSolenoid.Value.kForward);
+	// Wheel functions
+	public void runWheelsInward() {
+		frontWheels.set(1.0);
+		backWheels.set(-1.0);
 	}
-	//retracts the wheel intake pistons
-
-	public void retractFrontArm() {
-		cylinderArmFront.set(DoubleSolenoid.Value.kReverse);
+	public void stopWheels() {
+		frontWheels.set(0);
+		backWheels.set(0);
 	}
-
-	//extends the wheel intake pistons
-	public void extendBackArm() {
-		cylinderArmBack.set(DoubleSolenoid.Value.kForward);
-	}
-	//retracts the wheel intake pistons
-
-	public void retractBackArm() {
-		cylinderArmBack.set(DoubleSolenoid.Value.kReverse);
-	}
-	//turns off the wheel intake pistons
-
-	public void turnOffFrontArm() {
-		cylinderArmFront.set(DoubleSolenoid.Value.kOff);
+	public void expelForwards() {
+		// TODO: run both wheels in the same direction to push the ball out
+		frontWheels.set(-1.0);
+		backWheels.set(-1.0);
 	}
 
-	//turns off the wheel intake pistons
-	public void turnOffBackArm() {
-		cylinderArmBack.set(DoubleSolenoid.Value.kOff);
+	// Arm functions
+	public void extendArms() {
+		cylinderArms.set(DoubleSolenoid.Value.kForward);
+	}
+	public void retractArms() {
+		cylinderArms.set(DoubleSolenoid.Value.kReverse);
 	}
 }

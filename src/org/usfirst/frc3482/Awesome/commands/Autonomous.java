@@ -26,7 +26,7 @@ public class  Autonomous extends CommandGroup {
         //requires(Robot.camera);
         requires(Robot.chassis);
         //addParallel(new PullBack());
-        addParallel(new Aim());
+        //addParallel(new Aim());
         //System.out.println("Calling autoshoot");
         //addSequential(new AutoShoot());
         // pulls back catapult and checks if goal is hot
@@ -45,8 +45,9 @@ public class  Autonomous extends CommandGroup {
         }*/
         /*addParallel(new PullBack());
         addSequential(new Aim());
-        addSequential(new Shoot());
-        addSequential(new Move(2,0,5));*/
+        addSequential(new Shoot());*/
+        addSequential(new Move(0.8, 0.0, 3.0));
+		addSequential(new Pass());
     }
 }
 

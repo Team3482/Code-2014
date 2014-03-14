@@ -47,6 +47,10 @@ public class Robot extends IterativeRobot {
         teleopCommand = new Drive();
     }
 
+	/**
+	 * This begins the autonomous command, engages the winch clutch,
+	 * and starts the compressor loop
+	 */
     public void autonomousInit() {
         if (autonomousCommand != null) autonomousCommand.start();
         catapult.engageClutch();

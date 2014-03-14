@@ -52,9 +52,8 @@ public class OI {
     public JoystickButton pullBackButton;
 	public JoystickButton winchReverseButton;
     public JoystickButton aimButton;
-    public JoystickButton frontPassButton;
-    public JoystickButton backPassButton;
-    public JoystickButton loadFrontButton;
+    public JoystickButton passButton;
+    public JoystickButton loadButton;
     public JoystickButton stopButton;
     public Joystick joystick;
 	
@@ -87,22 +86,18 @@ public class OI {
                 }
             }
         }
-        // stop      - back button
-        // loadFront - right bumper: this extends the front and keeps it there
-        // loadBack  - left bumper: this retracts the front
-        // frontPass - a
-        // backPass  - b
+        // stop      - back button: stops robot when pressed
+        // load      - right bumper: stays extended while held
+        // pass      - a: passes ball forwards while held + arms up
         // pullBack  - left trigger TODO | actually x right now
-        // aim       - right stick press
         // shoot     - right trigger TODO | actually y right now
+        // aim       - right stick press (this doesn't do anything currently)
         stopButton = new JoystickButton(joystick, 7);
         stopButton.whenPressed(new Stop());
-        loadFrontButton = new JoystickButton(joystick, 6);
-        loadFrontButton.whileHeld(new Load());
-        frontPassButton = new JoystickButton(joystick, 1);
-        frontPassButton.whileHeld(new FrontPass());
-        backPassButton = new JoystickButton(joystick, 2);
-        backPassButton.whileHeld(new BackPass());
+        loadButton = new JoystickButton(joystick, 6);
+        loadButton.whileHeld(new Load());
+        passButton = new JoystickButton(joystick, 1);
+        passButton.whileHeld(new Pass());
         pullBackButton = new JoystickButton(joystick, 3);
         pullBackButton.whileHeld(new PullBack());
 		winchReverseButton = new JoystickButton(joystick, 8);
@@ -118,9 +113,7 @@ public class OI {
 
         SmartDashboard.putData("Drive", new Drive());
 
-        SmartDashboard.putData("Pass", new FrontPass());
-
-        SmartDashboard.putData("Run Wheels", new RunFrontWheels());
+        SmartDashboard.putData("Pass", new Pass());
 
         SmartDashboard.putData("Load", new Load());
 
