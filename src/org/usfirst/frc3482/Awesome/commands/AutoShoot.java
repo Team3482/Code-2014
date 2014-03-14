@@ -30,7 +30,8 @@ public class AutoShoot extends CommandGroup {
 	protected void execute() {
 		try {
 			System.out.println("Processing image");
-			if (Robot.camera.processImage()) {
+			Robot.camera.processImage();
+			if (Robot.camera.foundHorizontal() && Robot.camera.foundVertical()) {
 				addSequential(new PullBack());
 			} else {
 				Timer.delay(5);
