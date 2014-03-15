@@ -59,6 +59,7 @@ public class OI {
 	
 
     public OI() {
+		joystick = new Joystick(1);
         // stop      - back button: stops robot when pressed
         // load      - right bumper: stays extended while held
         // pass      - a: passes ball forwards while held + arms up
