@@ -1,27 +1,21 @@
 package org.usfirst.frc3482.Awesome.subsystems;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Ultrasonic;
-import org.usfirst.frc3482.Awesome.RobotMap;
-import org.usfirst.frc3482.Awesome.commands.*;
 import edu.wpi.first.wpilibj.camera.*;
 import edu.wpi.first.wpilibj.image.*;
-import java.lang.Math;
-import org.usfirst.frc3482.Awesome.Robot;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.Counter;
 
+/**
+ * The camera subsystem allows for processing of an image to detect both the vertical
+ * and horizontal vision targets (when present). Image processing here is not real time,
+ * instead a single image is captured and analyzed, and we assume that only one pair of
+ * vision targets is visible. The image is captured at the start of autonomous and if both
+ * targets are visible (the goal is "hot"), the robot scores the ball. Otherwise, if only
+ * the vertical target is detected, the robot waits five seconds for the hot targets to 
+ * change and then scores the ball. If neither target is visible, then the robot defaults
+ * to scoring the ball.
+ */
 public class Camera extends Subsystem {
-    /* The camera subsytem allows for processing of an image to detect both the vertical
-	 * and horizontal vision targets (when present). Image processing here is not real time,
-	 * instead a single image is captured and analyzed, and we assume that only one pair of
-	 * vision targets is visible. The image is captured at the start of autonomous and if both
-	 * targets are visible (the goal is "hot"), the robot scores the ball. Otherwise, if only
-	 * the vertical target is detected, the robot waits five seconds for the hot targets to 
-	 * change and then scores the ball. If neither target is visible, then the robot defaults
-	 * to scoring the ball.
-	 * */
 
 	// Initialize variables used in this subsystem
 	AxisCamera cam;
@@ -29,6 +23,7 @@ public class Camera extends Subsystem {
 	BinaryImage filtered;
 	BinaryImage sizeFiltered;
 	BinaryImage convexHull;
+	boolean cameraInitialized = false;
 	boolean foundHorizontalTarget = false;
 	boolean foundVerticalTarget = false;
 
@@ -75,32 +70,37 @@ public class Camera extends Subsystem {
 		//setDefaultCommand(new MySpecialCommand());
 	}
 
+	/**
+	 * Call this function before trying to process images, this only
+	 * has to be called once, and only once. It takes too much time
+	 * to run, so consider running this before the match begins
+	 */
 	public void initCamera() throws AxisCameraException {
-		/* Call this function before trying to process images, this only
-		 * has to be called once, and only once. It takes too much time
-		 * to run, so consider running this before the match begins */
 
-		long startTime = System.currentTimeMillis();  // this is for timing purposes
-		cam = AxisCamera.getInstance(IP_ADDRESS);  // grab the camera at the default IP
-		while (!cam.freshImage()) {  // wait for the camera to finish starting up
-			Timer.delay(0.1);
+		if(!cameraInitialized) {
+			long startTime = System.currentTimeMillis();  // this is for timing purposes
+			cam = AxisCamera.getInstance(IP_ADDRESS);  // grab the camera at the default IP
+			while (!cam.freshImage()) {  // wait for the camera to finish starting up
+				Timer.delay(0.1);
+			}
+
+			/* Set up the camera settings to make sure they're consistent.
+			 * This takes a *lot* of time (about six to ten seconds) */
+			cam.writeBrightness(BRIGHTNESS);
+			cam.writeColorLevel(COLOR_LEVEL);
+			cam.writeCompression(COMPRESSION);
+			cam.writeExposureControl(EXPOSURE);
+			cam.writeExposurePriority(EXPOSURE_PRIORITY);
+			cam.writeMaxFPS(MAX_FPS);
+			cam.writeResolution(RESOLUTION);
+			cam.writeRotation(ROTATION);
+			cam.writeWhiteBalance(WHITE_BALANCE);
+			cameraInitialized = true;
+			
+			// Output function execution time
+			long endTime = System.currentTimeMillis();
+			System.out.println("Initialization Time: " + (endTime - startTime));
 		}
-
-		/* Set up the camera settings to make sure they're consistent.
-		 * This takes a *lot* of time (about six to ten seconds) */
-		cam.writeBrightness(BRIGHTNESS);
-		cam.writeColorLevel(COLOR_LEVEL);
-		cam.writeCompression(COMPRESSION);
-		cam.writeExposureControl(EXPOSURE);
-		cam.writeExposurePriority(EXPOSURE_PRIORITY);
-		cam.writeMaxFPS(MAX_FPS);
-		cam.writeResolution(RESOLUTION);
-		cam.writeRotation(ROTATION);
-		cam.writeWhiteBalance(WHITE_BALANCE);
-		
-		// Output function execution time
-		long endTime = System.currentTimeMillis();
-		System.out.println("Initialization Time: " + (endTime - startTime));
 	}
 
 	public void processImage() throws AxisCameraException, NIVisionException {

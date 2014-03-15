@@ -9,10 +9,9 @@ import org.usfirst.frc3482.Awesome.Robot;
 public class Load extends CommandGroup {
 
 	public Load() {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
 		requires(Robot.wheelPickup);
-		// allow driving to happen while load executes
+
+		// allow driving while load executes
 		addParallel(new Drive());
 		addParallel(new RetrieveBall());
 	}

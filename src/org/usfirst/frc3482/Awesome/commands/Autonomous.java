@@ -3,9 +3,10 @@ package org.usfirst.frc3482.Awesome.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc3482.Awesome.Robot;
+import java.lang.Thread;
 
 public class  Autonomous extends CommandGroup {
-    
+
     public Autonomous() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
@@ -24,28 +25,18 @@ public class  Autonomous extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
         //requires(Robot.camera);
+
         requires(Robot.chassis);
-        //addParallel(new PullBack());
-        //addParallel(new Aim());
-        //System.out.println("Calling autoshoot");
-        //addSequential(new AutoShoot());
-        // pulls back catapult and checks if goal is hot
-        // If it is hot, shoot. If not, wait 5 seconds and then shoot
-        /*try {
-            System.out.println("Distance: " + Robot.chassis.getDistance());
-            System.out.println("Processing image");
-            if (Robot.camera.processImage()) {
-                addSequential(new Shoot());
-            } else {
-                Timer.delay(5);
-                addSequential(new Shoot());
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }*/
-        /*addParallel(new PullBack());
-        addSequential(new Aim());
-        addSequential(new Shoot());*/
+		requires(Robot.camera);
+
+		// Grab an image and process it
+		try {
+			Robot.camera.processImage();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		// Move up to the goal immediately, regardless of which targets were detected
         addSequential(new Move(0.8, 0.0, 3.0));
 		addSequential(new Pass());
     }

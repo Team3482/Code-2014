@@ -59,33 +59,6 @@ public class OI {
 	
 
     public OI() {
-        // xbox controller
-        joystick = new Joystick(1);
-        
-        // axis 9 is left trigger
-        // axis 10 is right trigger
-        class XboxTrigger extends Trigger {
-            Joystick controller;
-            double threshold;
-            int axis;
-            public XboxTrigger(Joystick c, boolean rightTrigger, double triggerThreshold) {
-                controller = c;
-                threshold = triggerThreshold;
-                if(rightTrigger) {
-                    axis = 10;
-                } else {
-                    axis = 9;
-                }
-            }
-            public boolean get() {
-                System.out.println(controller.getRawAxis(axis));
-                if(controller.getRawAxis(axis) >= threshold) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        }
         // stop      - back button: stops robot when pressed
         // load      - right bumper: stays extended while held
         // pass      - a: passes ball forwards while held + arms up
@@ -105,7 +78,7 @@ public class OI {
 	    shootButton = new JoystickButton(joystick, 4);
         shootButton.whileHeld(new Shoot());
         aimButton = new JoystickButton(joystick, 10);
-        aimButton.whenPressed(new Aim());
+        aimButton.whenPressed(new PositionRobot());
         
 	    
         // SmartDashboard Buttons
@@ -117,7 +90,7 @@ public class OI {
 
         SmartDashboard.putData("Load", new Load());
 
-        SmartDashboard.putData("Aim", new Aim());
+        SmartDashboard.putData("Aim", new PositionRobot());
 
         SmartDashboard.putData("Pull Back", new PullBack());
 
