@@ -11,9 +11,6 @@ import edu.wpi.first.wpilibj.buttons.*;
  */
 public class OI {
 
-    public class XboxController {
-
-    }
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
     // You create one by telling it which joystick it's on and which button
@@ -25,62 +22,101 @@ public class OI {
     // a button or switch hooked up to the cypress module. These are useful if
     // you want to build a customized operator interface.
     // Button button = new DigitalIOButton(1);
+
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
+
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of
     // three ways:
+
     // Start the command when the button is pressed and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenPressed(new ExampleCommand());
+
     // Run the command while the button is being held down and interrupt it once
     // the button is released.
     // button.whileHeld(new ExampleCommand());
+
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
-    //public Trigger shootTrigger;
-    //public Trigger pullBackTrigger
-    public JoystickButton shootButton;
-    public JoystickButton pullBackButton;
+
+   /*----------- Xbox Controller ------------*/
+    public Joystick       joystick;
+    public Trigger        pullBackTrigger;
+    public Trigger        shootTrigger;
     public JoystickButton winchReverseButton;
     public JoystickButton aimButton;
     public JoystickButton passButton;
     public JoystickButton loadButton;
     public JoystickButton stopButton;
-    public Joystick joystick;
+
+	double threshold = 0.8;
+	public class leftTrigger extends Trigger {
+		public boolean get() {
+			double triggerAxis = joystick.getRawAxis(3);
+			if(triggerAxis > threshold) {
+				System.out.println("left trigger activated *psshoooo*");
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+	public class rightTrigger extends Trigger {
+		public boolean get() {
+			double triggerAxis = joystick.getRawAxis(3);
+			if(triggerAxis < -threshold) {
+				System.out.println("right trigger activated *shooooop*");
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+   /*----------- Arcade Buttons -------------*/
+    public Joystick       buttons;
     public JoystickButton easyWinch;
     public JoystickButton easyShoot;
-    public Joystick buttons;
+	public JoystickButton configureCamera;
 
     public OI() {
         joystick = new Joystick(1);
         buttons = new Joystick(2);
+
         // stop      - back button: stops robot when pressed
         // load      - right bumper: stays extended while held
         // pass      - a: passes ball forwards while held + arms up
-        // pullBack  - left trigger TODO | actually x right now
-        // shoot     - right trigger TODO | actually y right now
+        // pullBack  - left trigger
+        // shoot     - right trigger
         // aim       - right stick press (this doesn't do anything currently)
         easyWinch = new JoystickButton(buttons, 1);
         easyWinch.whileHeld(new PullBack());
         easyShoot = new JoystickButton(buttons, 2);
         easyShoot.whenPressed(new Shoot());
+		configureCamera = new JoystickButton(buttons, 3);
+		configureCamera.whenPressed(new ConfigureCamera());
+
+
         stopButton = new JoystickButton(joystick, 7);
         stopButton.whenPressed(new Stop());
         loadButton = new JoystickButton(joystick, 6);
         loadButton.whileHeld(new Load());
         passButton = new JoystickButton(joystick, 1);
         passButton.whileHeld(new Pass());
-        pullBackButton = new JoystickButton(joystick, 3);
-        pullBackButton.whileHeld(new PullBack());
         winchReverseButton = new JoystickButton(joystick, 8);
         winchReverseButton.whileHeld(new ReverseWinch());
-        shootButton = new JoystickButton(joystick, 4);
-        shootButton.whileHeld(new Shoot());
         aimButton = new JoystickButton(joystick, 10);
         aimButton.whenPressed(new PositionRobot());
+
+		pullBackTrigger = new leftTrigger();
+		pullBackTrigger.whileActive(new PullBack());
+		shootTrigger = new rightTrigger();
+		shootTrigger.whenActive(new Shoot());
+
 
         // SmartDashboard Buttons
         SmartDashboard.putData("Autonomous", new Autonomous());

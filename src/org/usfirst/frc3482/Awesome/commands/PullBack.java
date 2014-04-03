@@ -20,11 +20,8 @@ public class PullBack extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		//starts pulling the catapult back with a motor
 		Robot.catapult.engageClutch();
 		System.out.println("Clutch engaged");
-		Robot.catapult.engageRatchet();
-		System.out.println("Ratchet engaged");
 		Robot.catapult.startPull();
 	}
 
@@ -38,9 +35,6 @@ public class PullBack extends Command {
 	protected void end() {
 		//stops pulling the catapult back with a motor
 		Robot.catapult.stopPull();
-		Robot.catapult.engageRatchet();
-		System.out.println("Ratchet engaged");
-		//closes the release and lock the catapult via pistons
 	}
 
 	// Called when another command which requires one or more of the same

@@ -58,11 +58,7 @@ public class Camera extends Subsystem {
 	public Camera() {
 		/* Call initCamera() here so that (ideally) the robot is ready to go before autonomous
 		 * mode is instantiated */
-		try {
-			initCamera();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		initCamera();
 	}
 
 	public void initDefaultCommand() {
@@ -75,13 +71,16 @@ public class Camera extends Subsystem {
 	 * has to be called once, and only once. It takes too much time
 	 * to run, so consider running this before the match begins
 	 */
-	public void initCamera() throws AxisCameraException {
+	public void initCamera() {
 
 		if(!cameraInitialized) {
 			long startTime = System.currentTimeMillis();  // this is for timing purposes
-			cam = AxisCamera.getInstance(IP_ADDRESS);  // grab the camera at the default IP
-			while (!cam.freshImage()) {  // wait for the camera to finish starting up
-				Timer.delay(0.1);
+
+			System.out.println("Connecting to camera...");
+			try {
+				cam = AxisCamera.getInstance(IP_ADDRESS);  // grab the camera at the default IP
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 
 			/* Set up the camera settings to make sure they're consistent.
@@ -96,6 +95,7 @@ public class Camera extends Subsystem {
 			cam.writeRotation(ROTATION);
 			cam.writeWhiteBalance(WHITE_BALANCE);
 			cameraInitialized = true;
+			System.out.println("Camera is configured!");
 			
 			// Output function execution time
 			long endTime = System.currentTimeMillis();

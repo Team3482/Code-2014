@@ -8,6 +8,7 @@ import org.usfirst.frc3482.Awesome.Robot;
 // Extends CommandGroup in order to be able to drive at the same time
 public class Load extends CommandGroup {
 
+	boolean first = true;
 	public Load() {
 		requires(Robot.wheelPickup);
 
@@ -23,7 +24,12 @@ public class Load extends CommandGroup {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		//extends the pistons for the wheel pickup system
-		Robot.wheelPickup.extendArms();
+		if(first) {
+			Robot.wheelPickup.extendArms();
+			Timer.delay(0.5);
+			first = false;
+		}
+		Robot.wheelPickup.ventArms();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -35,6 +41,7 @@ public class Load extends CommandGroup {
 	protected void end() {
 		//retracts and sets the pistons off for the wheel pickup system
 		Robot.wheelPickup.retractArms();
+		first = true;
 	}
 
 	// Called when another command which requires one or more of the same
