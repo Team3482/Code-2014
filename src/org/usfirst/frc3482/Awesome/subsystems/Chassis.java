@@ -23,8 +23,6 @@ public class Chassis extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	public void initDefaultCommand() {
-		setDefaultCommand(new Drive());
-
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
 	}
@@ -35,6 +33,7 @@ public class Chassis extends Subsystem {
 		robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
 		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+		System.out.println("YO THE MOTORS WERE JUST INVERTED, WATCH OUT MAN");
 	}
 	//drives the robot with a joystick - normal configuration
 
@@ -64,8 +63,8 @@ public class Chassis extends Subsystem {
 	public void driveWithXboxController(Joystick s) {
 		double leftY = s.getRawAxis(2);
 		double rightX = s.getRawAxis(4);
-		//double sensitivity = SmartDashboard.getNumber("Slider 1");
-		//sensitivity /= 100;
+		double sensitivity = SmartDashboard.getNumber("Slider 1");
+		sensitivity /= 100;
 		double deadZone = 0.1;
 
 		if (leftY < deadZone && leftY > -deadZone) {
@@ -74,7 +73,7 @@ public class Chassis extends Subsystem {
 		if (rightX < deadZone && rightX > -deadZone) {
 			rightX = 0;
 		}
-		//leftY *= sensitivity;
+		rightX *= sensitivity;
 		robotDrive.arcadeDrive(leftY, rightX);
 	}
 	//moves the robot to a location

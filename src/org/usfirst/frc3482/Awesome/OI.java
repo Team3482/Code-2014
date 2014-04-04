@@ -53,6 +53,8 @@ public class OI {
     public JoystickButton loadButton;
     public JoystickButton stopButton;
 	public JoystickButton wheelsButton;
+	public JoystickButton configureCamera;
+	public JoystickButton extendedPassButton;
 
 	double threshold = 0.8;
 	public class leftTrigger extends Trigger {
@@ -80,7 +82,6 @@ public class OI {
     public Joystick       buttons;
     public JoystickButton easyWinch;
     public JoystickButton easyShoot;
-	public JoystickButton configureCamera;
 
     public OI() {
         joystick = new Joystick(1);
@@ -89,6 +90,7 @@ public class OI {
         // stop      - back button: stops robot when pressed
         // load      - right bumper: stays extended while held
         // pass      - a: passes ball forwards while held + arms up
+		// camera    - x: configure the camera
         // pullBack  - left trigger
         // shoot     - right trigger
         // aim       - right stick press (this doesn't do anything currently)
@@ -96,22 +98,23 @@ public class OI {
         easyWinch.whileHeld(new PullBack());
         easyShoot = new JoystickButton(buttons, 2);
         easyShoot.whenPressed(new Shoot());
-		configureCamera = new JoystickButton(buttons, 3);
-		configureCamera.whenPressed(new ConfigureCamera());
-
 
         stopButton = new JoystickButton(joystick, 7);
         stopButton.whenPressed(new Stop());
         loadButton = new JoystickButton(joystick, 6);
         loadButton.whileHeld(new Load());
+		extendedPassButton = new JoystickButton(joystick, 2);
+		extendedPassButton.whileHeld(new ExtendedPass());
 		wheelsButton = new JoystickButton(joystick, 5);
         wheelsButton.whileHeld(new RetrieveBall());
         passButton = new JoystickButton(joystick, 1);
         passButton.whileHeld(new Pass());
         winchReverseButton = new JoystickButton(joystick, 8);
         winchReverseButton.whileHeld(new ReverseWinch());
-        aimButton = new JoystickButton(joystick, 10);
-        aimButton.whenPressed(new PositionRobot());
+        //aimButton = new JoystickButton(joystick, 10);
+        //aimButton.whenPressed(new PositionRobot());
+		configureCamera = new JoystickButton(joystick, 3);
+		configureCamera.whenPressed(new ConfigureCamera());
 
 		pullBackTrigger = new leftTrigger();
 		pullBackTrigger.whileActive(new PullBack());

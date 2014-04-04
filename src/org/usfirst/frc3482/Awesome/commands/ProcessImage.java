@@ -23,7 +23,10 @@ public class ProcessImage extends Command {
 		try {
 			Robot.camera.processImage();
 		} catch (Exception e) {
+			System.out.println("bad things is happenings");
 			System.out.println(e.getMessage());
+			System.out.println(e.getClass());
+			e.printStackTrace();
 		}
 	}
 	public boolean isFinished() {

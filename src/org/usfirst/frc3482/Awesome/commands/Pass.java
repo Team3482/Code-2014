@@ -19,7 +19,6 @@ public class Pass extends CommandGroup {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		//TODO: make needed checks (arms need to be up)
 		Robot.wheelPickup.expelForwards();
 	}
 

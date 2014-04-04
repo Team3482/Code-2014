@@ -35,10 +35,10 @@ public class Camera extends Subsystem {
 	final int SATURATION_HIGH = 255;
 	final int VALUE_LOW = 180;
 	final int VALUE_HIGH = 255;
-	final String IP_ADDRESS = "10.34.82.11";
 	final int BRIGHTNESS = 40;
 	final int COLOR_LEVEL = 70;
 	final int COMPRESSION = 20;
+	final String IP_ADDRESS = "10.34.82.11";
 
 	// These constants are used for target detection and thresholding
 	final double VERTICAL_ASPECT_RATIO = 0.125;  // aspect ratio of the vertical target
@@ -59,7 +59,6 @@ public class Camera extends Subsystem {
 	public Camera() {
 		/* Call initCamera() here so that (ideally) the robot is ready to go before autonomous
 		 * mode is instantiated */
-		initCamera();
 	}
 
 	public void initDefaultCommand() {
@@ -80,8 +79,11 @@ public class Camera extends Subsystem {
 			System.out.println("Connecting to camera...");
 			try {
 				cam = AxisCamera.getInstance(IP_ADDRESS);  // grab the camera at the default IP
+				System.out.println("Camera connected!");
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
+				System.out.println(e.getClass());
+				e.printStackTrace();
 			}
 
 			/* Set up the camera settings to make sure they're consistent.
@@ -116,6 +118,7 @@ public class Camera extends Subsystem {
 		// Get an image and immediately write it for debugging purposes
 		colorImg = cam.getImage();
 		colorImg.write("/tmp/axis_camera_rgb.png");
+		System.out.println("color image written");
 		
 		// Filter the image -> returns a binary image + write
 		filtered = colorImg.thresholdHSV(HUE_LOW, HUE_HIGH, SATURATION_LOW, SATURATION_HIGH, VALUE_LOW, VALUE_HIGH);

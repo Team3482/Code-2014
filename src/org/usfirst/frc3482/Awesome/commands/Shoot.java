@@ -21,8 +21,10 @@ public class Shoot extends CommandGroup {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+		// extends arms to allow for catapult to shoot out
 		Robot.wheelPickup.extendArms();
 		Timer.delay(1);
+		// disengages clutch and reverse pulls to help the catapult release
 		Robot.catapult.disengageClutch();
 		Robot.catapult.reversePull();
 		Timer.delay(0.25);

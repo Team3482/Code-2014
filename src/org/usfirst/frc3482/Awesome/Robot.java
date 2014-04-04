@@ -43,6 +43,7 @@ public class Robot extends IterativeRobot {
         oi = new OI();
 	
         // instantiate the command used for the autonomous period
+		Robot.chassis.invertMotors();
         autonomousCommand = new Autonomous();
         teleopCommand = new Drive();
     }
