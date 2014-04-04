@@ -12,6 +12,7 @@ public class Shoot extends CommandGroup {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(Robot.catapult);
+		requires(Robot.wheelPickup);
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +21,11 @@ public class Shoot extends CommandGroup {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.catapult.disengageClutch();
+		Robot.wheelPickup.extendArms();
+		Timer.delay(1);
+		Robot.catapult.disengageClutch();
+		Robot.catapult.reversePull();
+		Timer.delay(0.25);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -30,6 +35,8 @@ public class Shoot extends CommandGroup {
 
     // Called once after isFinished returns true
     protected void end() {
+		Robot.wheelPickup.retractArms();
+		Robot.catapult.stopPull();
     }
 
     // Called when another command which requires one or more of the same

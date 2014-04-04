@@ -52,13 +52,13 @@ public class OI {
     public JoystickButton passButton;
     public JoystickButton loadButton;
     public JoystickButton stopButton;
+	public JoystickButton wheelsButton;
 
 	double threshold = 0.8;
 	public class leftTrigger extends Trigger {
 		public boolean get() {
 			double triggerAxis = joystick.getRawAxis(3);
 			if(triggerAxis > threshold) {
-				System.out.println("left trigger activated *psshoooo*");
 				return true;
 			} else {
 				return false;
@@ -69,7 +69,6 @@ public class OI {
 		public boolean get() {
 			double triggerAxis = joystick.getRawAxis(3);
 			if(triggerAxis < -threshold) {
-				System.out.println("right trigger activated *shooooop*");
 				return true;
 			} else {
 				return false;
@@ -105,6 +104,8 @@ public class OI {
         stopButton.whenPressed(new Stop());
         loadButton = new JoystickButton(joystick, 6);
         loadButton.whileHeld(new Load());
+		wheelsButton = new JoystickButton(joystick, 5);
+        wheelsButton.whileHeld(new RetrieveBall());
         passButton = new JoystickButton(joystick, 1);
         passButton.whileHeld(new Pass());
         winchReverseButton = new JoystickButton(joystick, 8);

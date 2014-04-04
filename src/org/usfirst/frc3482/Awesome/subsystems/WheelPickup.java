@@ -33,8 +33,8 @@ public class WheelPickup extends Subsystem {
 	// Wheel functions
 	double wheelSpeed = 1.0;
 	public void runWheelsInward() {
-		frontWheels.set(-wheelSpeed);
-		backWheels.set(wheelSpeed);
+		frontWheels.set(wheelSpeed);
+		backWheels.set(-wheelSpeed);
 	}
 	public void stopWheels() {
 		frontWheels.set(0);
@@ -42,8 +42,8 @@ public class WheelPickup extends Subsystem {
 	}
 	public void expelForwards() {
 		// TODO: run both wheels in the same direction to push the ball out
-		frontWheels.set(wheelSpeed);
-		backWheels.set(wheelSpeed);
+		frontWheels.set(-wheelSpeed);
+		backWheels.set(-wheelSpeed);
 	}
 
 	// Arm functions

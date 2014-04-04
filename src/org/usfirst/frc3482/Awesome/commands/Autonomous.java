@@ -3,7 +3,6 @@ package org.usfirst.frc3482.Awesome.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc3482.Awesome.Robot;
-import java.lang.Thread;
 
 public class  Autonomous extends CommandGroup {
 
@@ -38,7 +37,20 @@ public class  Autonomous extends CommandGroup {
 
 		// Move up to the goal immediately, regardless of which targets were detected
         addSequential(new Move(0.8, 0.0, 3.0));
-		addSequential(new Pass());
+
+		if(Robot.camera.foundVertical() && Robot.camera.foundHorizontal()) {
+			// if both targets are found, then pass
+			addSequential(new Pass());
+		} else if(Robot.camera.foundVertical() && !Robot.camera.foundHorizontal()) {
+			// Wait for 5.5 seconds, then shoot
+			Timer.delay(5.5 - Robot.camera.getElapsedTime());
+			addSequential(new Pass());
+		} else {
+			// otherwise just forget it and pass anyway
+			addSequential(new Pass());
+			// and print an error message
+			System.out.println("No targets detected, defaulted.");
+		}
     }
 }
 

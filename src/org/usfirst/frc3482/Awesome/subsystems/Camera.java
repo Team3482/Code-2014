@@ -26,6 +26,7 @@ public class Camera extends Subsystem {
 	boolean cameraInitialized = false;
 	boolean foundHorizontalTarget = false;
 	boolean foundVerticalTarget = false;
+	double elapsedTime;
 
 	// These are constants for our image filters #vintage #hipster #instagram #yolo
 	final int HUE_LOW = 93;
@@ -84,7 +85,8 @@ public class Camera extends Subsystem {
 			}
 
 			/* Set up the camera settings to make sure they're consistent.
-			 * This takes a *lot* of time (about six to ten seconds) */
+			 * This takes a *lot* of time (about six to ten seconds), so it
+			 * shouldn't happen at startup every time */
 			cam.writeBrightness(BRIGHTNESS);
 			cam.writeColorLevel(COLOR_LEVEL);
 			cam.writeCompression(COMPRESSION);
@@ -107,7 +109,9 @@ public class Camera extends Subsystem {
 		/* This grabs a single image, processes it, and stores the particle scores in a local array */
 
 		// For timing function execution
+		elapsedTime = 0.0;
 		long startTime = System.currentTimeMillis();
+		long endTime;
 		
 		// Get an image and immediately write it for debugging purposes
 		colorImg = cam.getImage();
@@ -130,15 +134,12 @@ public class Camera extends Subsystem {
 		convexHull = sizeFiltered.convexHull(false);
 		convexHull.write("/tmp/convex_hull.png");
 
-		// Print the execution time
-		long endTime = System.currentTimeMillis();
-		System.out.println("Image Write(s) Time: " + (endTime - startTime));
-
-		// Calculate particle scores and time it
-		startTime = System.currentTimeMillis();
+		// Calculate particle scores
 		calculateScores(filtered);
+
+		// Record end time and calculate elapsed time
 		endTime = System.currentTimeMillis();
-		System.out.println("Score Processing Time: " + (endTime - startTime));
+		elapsedTime = endTime - startTime;
 
 		// Free image variables
 		colorImg.free();
@@ -154,6 +155,11 @@ public class Camera extends Subsystem {
 
 	public boolean foundHorizontal() {
 		return foundHorizontalTarget;
+	}
+	public double getElapsedTime() {
+		/* returns the total amount of time it took to process the image */
+		// divide by 1000 to convert from milliseconds to seconds
+		return elapsedTime / 1000.0;
 	}
 
 	/**************************

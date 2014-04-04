@@ -64,8 +64,8 @@ public class Chassis extends Subsystem {
 	public void driveWithXboxController(Joystick s) {
 		double leftY = s.getRawAxis(2);
 		double rightX = s.getRawAxis(4);
-		double sensitivity = SmartDashboard.getNumber("Slider 1");
-		sensitivity /= 100;
+		//double sensitivity = SmartDashboard.getNumber("Slider 1");
+		//sensitivity /= 100;
 		double deadZone = 0.1;
 
 		if (leftY < deadZone && leftY > -deadZone) {
@@ -74,7 +74,7 @@ public class Chassis extends Subsystem {
 		if (rightX < deadZone && rightX > -deadZone) {
 			rightX = 0;
 		}
-		leftY *= sensitivity;
+		//leftY *= sensitivity;
 		robotDrive.arcadeDrive(leftY, rightX);
 	}
 	//moves the robot to a location
