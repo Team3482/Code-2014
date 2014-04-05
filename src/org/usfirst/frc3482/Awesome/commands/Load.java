@@ -11,7 +11,6 @@ public class Load extends CommandGroup {
 		requires(Robot.wheelPickup);
 		// allow driving while load executes
 		addParallel(new Drive());
-		addParallel(new RetrieveBall());
 	}
 
 	// Called just before this Command runs the first time
@@ -20,7 +19,10 @@ public class Load extends CommandGroup {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		//Robot.wheelPickup.extendArms();
+		Robot.wheelPickup.runWheelsInward();
+		// delay to allow for wheels to accelerate before coming into contact with the ball
+		Timer.delay(.375);
+		Robot.wheelPickup.extendArms();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -31,7 +33,8 @@ public class Load extends CommandGroup {
 	// Called once after isFinished returns true
 	protected void end() {
 		//retracts and sets the pistons off for the wheel pickup system
-		//Robot.wheelPickup.retractArms();
+		Robot.wheelPickup.retractArms();
+		Robot.wheelPickup.stopWheels();
 	}
 
 	// Called when another command which requires one or more of the same

@@ -80,6 +80,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+		Robot.chassis.driveWithXboxController(Robot.oi.joystick);
     }
 
     /**
