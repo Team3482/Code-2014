@@ -9,6 +9,7 @@ public class Load extends CommandGroup {
 
 	public Load() {
 		requires(Robot.wheelPickup);
+		requires(Robot.chassis);
 		// allow driving while load executes
 		addParallel(new Drive());
 	}

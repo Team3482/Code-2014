@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.Timer;
 public class ExtendedPass extends CommandGroup {
 	
 	public ExtendedPass() {
+		requires(Robot.wheelPickup);
+		requires(Robot.chassis);
         // Add Commands here:
 		// e.g. addSequential(new Command1());
 		//      addSequential(new Command2());
@@ -33,7 +35,6 @@ public class ExtendedPass extends CommandGroup {
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
 		addParallel(new Drive());
-		requires(Robot.wheelPickup);
 	}
 		protected void initialize() {
 		
