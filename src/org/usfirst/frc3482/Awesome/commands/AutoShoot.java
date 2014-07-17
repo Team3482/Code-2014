@@ -14,7 +14,8 @@ import org.usfirst.frc3482.Awesome.Robot;
  * @author Team3482
  */
 public class AutoShoot extends CommandGroup {
-	
+	private boolean TRYING_HIGH_GOAL = false;
+        private boolean TRYING_TWO_BALL = false;
 	public AutoShoot() {
         // Add Commands here:
 		// e.g. addSequential(new Command1());
@@ -33,32 +34,72 @@ public class AutoShoot extends CommandGroup {
 		// arm.
 		requires(Robot.wheelPickup);
 		requires(Robot.camera);
-	}
+                requires(Robot.catapult);
+               	}
 	protected void initialize() {
 	}
 	protected void execute() {
 		double spinTime = 3;
-		if(Robot.camera.foundVertical() && Robot.camera.foundHorizontal()) {
-			// if both targets are found, then pass
-			Robot.wheelPickup.expelForwards();
-			Timer.delay(spinTime);
-			Robot.wheelPickup.stopFrontWheels();
-		} else if(Robot.camera.foundVertical() && !Robot.camera.foundHorizontal()) {
-			// Wait for 5.5 seconds, then shoot
-			Timer.delay(5.5 - Robot.camera.getElapsedTime());
+                if (!TRYING_TWO_BALL) {
+                    if(Robot.camera.foundVertical() && Robot.camera.foundHorizontal()) {
+                    // if both targets are found, then pass
+                        if (!TRYING_HIGH_GOAL) {
+                            Robot.wheelPickup.expelForwards();
+                            Timer.delay(spinTime);
+                            Robot.wheelPickup.stopFrontWheels();
+                        } else {
+                            addSequential(new PullBack());
+                            addSequential(new Shoot());
+                        }
 
-			Robot.wheelPickup.expelForwards();
-			Timer.delay(spinTime);
-			Robot.wheelPickup.stopFrontWheels();
-		} else {
-			// otherwise just forget it and pass anyway
-			Robot.wheelPickup.expelForwards();
-			Timer.delay(spinTime);
-			Robot.wheelPickup.stopFrontWheels();
+                    } else if(Robot.camera.foundVertical() && !Robot.camera.foundHorizontal()) {
+                        // Wait for 5.5 seconds, then shoot
+                        Timer.delay(5.5 - Robot.camera.getElapsedTime());
+                        if (!TRYING_HIGH_GOAL) {
+                            Robot.wheelPickup.expelForwards();
+                            Timer.delay(spinTime);
+                            Robot.wheelPickup.stopFrontWheels();
+                        } else {
+                            addSequential(new PullBack());
+                            addSequential(new Shoot());
+                        }
+                    } else {
+                            // otherwise just forget it and pass anyway
+                        if (!TRYING_HIGH_GOAL) {
+                            Robot.wheelPickup.expelForwards();
+                            Timer.delay(spinTime);
+                            Robot.wheelPickup.stopFrontWheels();
+                        } else {
+                            addSequential(new PullBack());
+                            addSequential(new Shoot());
+                        }
 
-			// and print an error message
-			System.out.println("No targets detected, defaulted.");
-		}
+                            // and print an error message
+                        System.out.println("No targets detected, defaulted.");
+                    }
+                } else {
+                    // TRYING TWO BALL AUTO
+                    double pullTime = 1.0;
+                    //pulls back for pullTime seconds
+                    addSequential(new PullBack(), pullTime);
+                    //Extends arms to shoot
+                    Robot.wheelPickup.extendArmsBack();
+                    Robot.catapult.disengageClutch();
+                    Robot.catapult.reversePull();
+                    Timer.delay(0.25);
+                    Robot.catapult.stopPull();
+                    //Delays and brings next ball in from front intake and 
+                    //then retracts arms
+                    Timer.delay(0.5);
+                    Robot.wheelPickup.runWheelsInward();
+                    Robot.wheelPickup.retractArms();
+                    Timer.delay(1.0);
+                    Robot.wheelPickup.stopFrontWheels();
+                    Robot.wheelPickup.retractArmsBack();
+                    // pulls back and shoots 
+                    addSequential(new PullBack(), pullTime);
+                    addSequential(new Shoot());
+                }
 	}
 	protected boolean isFinished() {
 		return true;
