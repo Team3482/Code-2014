@@ -14,9 +14,9 @@ import edu.wpi.first.wpilibj.Timer;
  *
  * @author Team3482
  */
-public class ExtendedPass extends CommandGroup {
+public class ExtendedPassBack extends CommandGroup {
 	
-	public ExtendedPass() {
+	public ExtendedPassBack() {
 		requires(Robot.wheelPickup);
 		requires(Robot.chassis);
         // Add Commands here:
@@ -36,14 +36,14 @@ public class ExtendedPass extends CommandGroup {
 		// arm.
 		addParallel(new Drive());
 	}
-		protected void initialize() {
 		
-		}
+	protected void initialize() {
+	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		//extends the pistons for the wheel pickup system and runs wheels to propel ball out
-		Robot.wheelPickup.expelForwards();
+		Robot.wheelPickup.expelBackwards();
 		Robot.wheelPickup.extendArms();
 	}
 
@@ -56,7 +56,7 @@ public class ExtendedPass extends CommandGroup {
 	protected void end() {
 		//retracts and sets the pistons off for the wheel pickup system
 		Robot.wheelPickup.retractArms();
-		Robot.wheelPickup.stopWheels();
+		Robot.wheelPickup.stopBackWheels();
 	}
 
 	// Called when another command which requires one or more of the same

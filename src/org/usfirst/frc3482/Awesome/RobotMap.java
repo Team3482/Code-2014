@@ -10,6 +10,7 @@ public class RobotMap {
 	public static AnalogChannel ultrasonicSensor;
 	public static Compressor wheelPickupCompressor;
 	public static DoubleSolenoid cylinderArms;
+	public static DoubleSolenoid cylinderArmBack;
 	public static Relay wheelPickupSpike;
 	public static SpeedController wheelPickupFrontWheels;
 	public static SpeedController wheelPickupBackWheels;
@@ -30,7 +31,7 @@ public class RobotMap {
 
 		// Both pneumatic arms are connected to this solenoid:
 		cylinderArms = new DoubleSolenoid(1, 2);
-		//cylinderArmBack = new DoubleSolenoid(3, 4);
+		cylinderArmBack = new DoubleSolenoid(3, 4);
 		cylinderCatapultClutch = new DoubleSolenoid(5, 6);
 		cylinderCatapultRatchet = new DoubleSolenoid(7, 8);
 

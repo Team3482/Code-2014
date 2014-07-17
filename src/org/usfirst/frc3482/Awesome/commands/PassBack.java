@@ -3,9 +3,9 @@ package org.usfirst.frc3482.Awesome.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc3482.Awesome.Robot;
 
-public class Pass extends CommandGroup {
+public class PassBack extends CommandGroup {
 
-	public Pass() {
+	public PassBack() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 
@@ -30,7 +30,7 @@ public class Pass extends CommandGroup {
 	// Called once after isFinished returns true
 	protected void end() {
 		//stops the ball intake wheels from running
-		Robot.wheelPickup.stopWheels();
+		Robot.wheelPickup.stopFrontWheels();
 	}
 
 	// Called when another command which requires one or more of the same

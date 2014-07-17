@@ -22,11 +22,11 @@ public class Catapult extends Subsystem {
 
 	//starts pulling back the catapult with a motor
 	public void startPull() {
-		pull.set(1.0);
+		pull.set(-1.0);
 	}
 
 	public void reversePull() {
-		pull.set(-1.0);
+		pull.set(1.0);
 	}
 	//stops pulling back the catapult with a motor
 

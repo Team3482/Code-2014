@@ -49,12 +49,14 @@ public class OI {
     public Trigger        shootTrigger;
     public JoystickButton winchReverseButton;
     public JoystickButton aimButton;
-    public JoystickButton passButton;
-    public JoystickButton loadButton;
+    public JoystickButton passFrontButton;
+    public JoystickButton loadFrontButton;
     public JoystickButton stopButton;
-	public JoystickButton wheelsButton;
+	public JoystickButton wheelsFrontButton;
 	public JoystickButton configureCamera;
-	public JoystickButton extendedPassButton;
+	public JoystickButton extendedPassFrontButton;
+	public JoystickButton extendedPassBackButton;
+	public JoystickButton loadBackButton;
 
 	double threshold = 0.8;
 	public class leftTrigger extends Trigger {
@@ -94,27 +96,34 @@ public class OI {
         // pullBack  - left trigger
         // shoot     - right trigger
         // aim       - right stick press (this doesn't do anything currently)
-        easyWinch = new JoystickButton(buttons, 1);
+        
+		// Arcade buttons
+		easyWinch = new JoystickButton(buttons, 1);
         easyWinch.whileHeld(new PullBack());
         easyShoot = new JoystickButton(buttons, 2);
         easyShoot.whenPressed(new Shoot());
-
-        stopButton = new JoystickButton(joystick, 7);
-        stopButton.whenPressed(new Stop());
-        loadButton = new JoystickButton(joystick, 6);
-        loadButton.whileHeld(new Load());
-		extendedPassButton = new JoystickButton(joystick, 2);
-		extendedPassButton.whileHeld(new ExtendedPass());
-		wheelsButton = new JoystickButton(joystick, 5);
-        wheelsButton.whileHeld(new RetrieveBall());
-        passButton = new JoystickButton(joystick, 1);
-        passButton.whileHeld(new Pass());
+		configureCamera = new JoystickButton(buttons, 3);
+		configureCamera.whenPressed(new ConfigureCamera());
+//rb front lb back
+		// joystick buttons
+        loadFrontButton = new JoystickButton(joystick, 6);
+        loadFrontButton.whileHeld(new LoadFront());
+		loadBackButton = new JoystickButton(joystick, 5);
+        loadBackButton.whileHeld(new LoadBack());
+		extendedPassFrontButton = new JoystickButton(joystick, 2);
+		extendedPassFrontButton.whileHeld(new ExtendedPassBoth());
+		wheelsFrontButton = new JoystickButton(joystick, 7);
+        wheelsFrontButton.whileHeld(new RetrieveBallBoth());
+        passFrontButton = new JoystickButton(joystick, 1);
+        passFrontButton.whileHeld(new PassBoth());
         winchReverseButton = new JoystickButton(joystick, 8);
         winchReverseButton.whileHeld(new ReverseWinch());
         //aimButton = new JoystickButton(joystick, 10);
         //aimButton.whenPressed(new PositionRobot());
 		configureCamera = new JoystickButton(joystick, 3);
 		configureCamera.whenPressed(new ConfigureCamera());
+		extendedPassBackButton = new JoystickButton(joystick, 4);
+		extendedPassBackButton.whileHeld(new ExtendedPassBack());
 
 		pullBackTrigger = new leftTrigger();
 		pullBackTrigger.whileActive(new PullBack());
@@ -127,9 +136,9 @@ public class OI {
 
         SmartDashboard.putData("Drive", new Drive());
 
-        SmartDashboard.putData("Pass", new Pass());
+        SmartDashboard.putData("Pass", new PassBoth());
 
-        SmartDashboard.putData("Load", new Load());
+        SmartDashboard.putData("Load", new LoadFront());
 
         SmartDashboard.putData("Aim", new PositionRobot());
 

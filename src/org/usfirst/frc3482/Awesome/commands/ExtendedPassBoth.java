@@ -6,16 +6,19 @@
 package org.usfirst.frc3482.Awesome.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc3482.Awesome.Robot;
+import edu.wpi.first.wpilibj.Timer;
+
 
 /**
  *
  * @author Team3482
  */
-public class AutoShoot extends CommandGroup {
+public class ExtendedPassBoth extends CommandGroup {
 	
-	public AutoShoot() {
+	public ExtendedPassBoth() {
+		requires(Robot.wheelPickup);
+		requires(Robot.chassis);
         // Add Commands here:
 		// e.g. addSequential(new Command1());
 		//      addSequential(new Command2());
@@ -31,40 +34,38 @@ public class AutoShoot extends CommandGroup {
 		// e.g. if Command1 requires chassis, and Command2 requires arm,
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
-		requires(Robot.wheelPickup);
-		requires(Robot.camera);
+		addParallel(new Drive());
 	}
-	protected void initialize() {
-	}
-	protected void execute() {
-		double spinTime = 3;
-		if(Robot.camera.foundVertical() && Robot.camera.foundHorizontal()) {
-			// if both targets are found, then pass
-			Robot.wheelPickup.expelForwards();
-			Timer.delay(spinTime);
-			Robot.wheelPickup.stopFrontWheels();
-		} else if(Robot.camera.foundVertical() && !Robot.camera.foundHorizontal()) {
-			// Wait for 5.5 seconds, then shoot
-			Timer.delay(5.5 - Robot.camera.getElapsedTime());
-
-			Robot.wheelPickup.expelForwards();
-			Timer.delay(spinTime);
-			Robot.wheelPickup.stopFrontWheels();
-		} else {
-			// otherwise just forget it and pass anyway
-			Robot.wheelPickup.expelForwards();
-			Timer.delay(spinTime);
-			Robot.wheelPickup.stopFrontWheels();
-
-			// and print an error message
-			System.out.println("No targets detected, defaulted.");
+		protected void initialize() {
+		
 		}
+
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		//extends the pistons for the wheel pickup system and runs wheels to propel ball out
+		Robot.wheelPickup.expelForwards();
+		Robot.wheelPickup.extendArms();
+		Robot.wheelPickup.expelBackwards();
+		Robot.wheelPickup.extendArmsBack();
+		
 	}
+
+	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
+
+	// Called once after isFinished returns true
 	protected void end() {
+		//retracts and sets the pistons off for the wheel pickup system
+		Robot.wheelPickup.retractArms();
+		Robot.wheelPickup.stopFrontWheels();
 	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
 	protected void interrupted() {
+		end();
 	}
 }
+
