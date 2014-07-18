@@ -44,14 +44,14 @@ public class WheelPickup extends Subsystem {
 	}
 	
 	public void runBackWheelsInward() {
-		backWheels.set(-wheelSpeed);
+		backWheels.set(wheelSpeed);
 	}
 	public void stopBackWheels() {
 		backWheels.set(0);
 	}
 	public void expelBackwards() {
 		// TODO: run both wheels in the same direction to push the ball out
-		backWheels.set(wheelSpeed);
+		backWheels.set(-wheelSpeed);
 	}
 
 	// Arm functions
@@ -64,7 +64,7 @@ public class WheelPickup extends Subsystem {
 	public void retractArms() {
 		cylinderArmsFront.set(DoubleSolenoid.Value.kReverse);
 		runWheelsInward();
-		Timer.delay(0.2);
+		Timer.delay(0.7);
 		stopFrontWheels();
 	}
 	
@@ -77,7 +77,7 @@ public class WheelPickup extends Subsystem {
 	public void retractArmsBack() {
 		cylinderArmsBack.set(DoubleSolenoid.Value.kReverse);
 		runBackWheelsInward();
-		Timer.delay(0.2);
+		Timer.delay(0.7);
 		stopBackWheels();
 	}
 }

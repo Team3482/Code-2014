@@ -14,8 +14,8 @@ import org.usfirst.frc3482.Awesome.Robot;
  * @author Team3482
  */
 public class AutoShoot extends CommandGroup {
-	private boolean TRYING_HIGH_GOAL = false;
-        private boolean TRYING_TWO_BALL = false;
+	private final boolean TRYING_HIGH_GOAL = false;
+        private final boolean TRYING_TWO_BALL = true;
 	public AutoShoot() {
         // Add Commands here:
 		// e.g. addSequential(new Command1());
@@ -79,9 +79,15 @@ public class AutoShoot extends CommandGroup {
                     }
                 } else {
                     // TRYING TWO BALL AUTO
-                    double pullTime = 1.0;
+                    double pullTime = 0.6;
+					System.out.println("TWO BALL AUTO RUNNING; ROHIN IS THE BEST");
                     //pulls back for pullTime seconds
-                    addSequential(new PullBack(), pullTime);
+                    //addSequential(new PullBack(), pullTime);
+					Robot.catapult.engageClutch();
+					System.out.println("Clutch engaged");
+					Robot.catapult.startPull();
+					Timer.delay(pullTime);
+					Robot.catapult.stopPull();
                     //Extends arms to shoot
                     Robot.wheelPickup.extendArmsBack();
                     Robot.catapult.disengageClutch();
@@ -97,8 +103,23 @@ public class AutoShoot extends CommandGroup {
                     Robot.wheelPickup.stopFrontWheels();
                     Robot.wheelPickup.retractArmsBack();
                     // pulls back and shoots 
-                    addSequential(new PullBack(), pullTime);
-                    addSequential(new Shoot());
+                    //addSequential(new PullBack(), pullTime);
+					Robot.catapult.engageClutch();
+					System.out.println("Clutch engaged");
+					Robot.catapult.startPull();
+					Timer.delay(pullTime);
+					Robot.catapult.stopPull();
+                    //addSequential(new Shoot());
+					Robot.wheelPickup.extendArms();
+					Robot.wheelPickup.extendArmsBack();
+					Timer.delay(1);
+					// disengages clutch and reverse pulls to help the catapult release
+					Robot.catapult.disengageClutch();
+					Robot.catapult.reversePull();
+					Timer.delay(0.25);
+					Robot.wheelPickup.retractArms();
+					Robot.catapult.stopPull();
+					Robot.wheelPickup.retractArmsBack();
                 }
 	}
 	protected boolean isFinished() {
