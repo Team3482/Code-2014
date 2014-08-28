@@ -80,7 +80,7 @@ public class AutoShoot extends CommandGroup {
                 } else {
                     // TRYING TWO BALL AUTO
                     double pullTime = 0.6;
-					System.out.println("TWO BALL AUTO RUNNING; ROHIN IS THE BEST");
+					System.out.println("TWO BALL AUTO RUNNING");
                     //pulls back for pullTime seconds
                     //addSequential(new PullBack(), pullTime);
 					Robot.catapult.engageClutch();

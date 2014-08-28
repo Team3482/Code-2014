@@ -5,14 +5,15 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc3482.Awesome.Robot;
 
 // Extends CommandGroup in order to be able to drive at the same time
-public class LoadFront extends CommandGroup {
+// Catch command just opens arms to catch the ball
+public class Catch extends CommandGroup {
 
-	public LoadFront() {
+	public Catch() {
 		requires(Robot.wheelPickup);
 		requires(Robot.chassis);
 		// allow driving while load executes
 		addParallel(new Drive());
-		//addParallel(new LoadFront());
+		
 	}
 
 	// Called just before this Command runs the first time
@@ -21,9 +22,7 @@ public class LoadFront extends CommandGroup {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.wheelPickup.runWheelsInward();
-        Timer.delay(.375);
-		// delay to allow for wheels to accelerate before coming into contact with the ball
+		Robot.wheelPickup.extendArmsBack();
 		Robot.wheelPickup.extendArms();
 	}
 
@@ -36,7 +35,7 @@ public class LoadFront extends CommandGroup {
 	protected void end() {
 		//retracts and sets the pistons off for the wheel pickup system
 		Robot.wheelPickup.retractArms();
-		Robot.wheelPickup.stopFrontWheels();
+		Robot.wheelPickup.retractArmsBack();
 	}
 
 	// Called when another command which requires one or more of the same

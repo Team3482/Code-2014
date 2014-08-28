@@ -21,7 +21,6 @@ public class PullBack extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		Robot.catapult.engageClutch();
-		System.out.println("Clutch engaged");
 		Robot.catapult.startPull();
 	}
 

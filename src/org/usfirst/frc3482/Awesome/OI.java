@@ -57,6 +57,7 @@ public class OI {
 	public JoystickButton extendedPassFrontButton;
 	public JoystickButton extendedPassBackButton;
 	public JoystickButton loadBackButton;
+	public JoystickButton catchButton;
 
 	double threshold = 0.8;
 	public class leftTrigger extends Trigger {
@@ -102,9 +103,10 @@ public class OI {
         easyWinch.whileHeld(new PullBack());
         easyShoot = new JoystickButton(buttons, 2);
         easyShoot.whenPressed(new Shoot());
-		configureCamera = new JoystickButton(buttons, 3);
+		catchButton = new JoystickButton(buttons, 3);
+		catchButton.whileHeld(new Catch());
+		configureCamera = new JoystickButton(buttons, 4);
 		configureCamera.whenPressed(new ConfigureCamera());
-//rb front lb back
 		// joystick buttons
         loadFrontButton = new JoystickButton(joystick, 6);
         loadFrontButton.whileHeld(new LoadFront());
@@ -138,7 +140,7 @@ public class OI {
 
         SmartDashboard.putData("Pass", new PassBoth());
 
-        SmartDashboard.putData("Load", new LoadFront());
+        SmartDashboard.putData("Load", new Catch());
 
         SmartDashboard.putData("Aim", new PositionRobot());
 

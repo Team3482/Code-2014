@@ -35,10 +35,10 @@ public class  Autonomous extends CommandGroup {
 		}
 
         // Move up to the goal immediately, regardless of which targets were detected
-        Robot.wheelPickup.extendArms();
+        addSequential(new ExtendFront(), 1.0);
         addSequential(new Move(-0.8, 0.0, 3.0));
         addSequential(new AutoShoot());
-        Robot.wheelPickup.retractArms();
+        //Robot.wheelPickup.retractArms();
     }
 }
 

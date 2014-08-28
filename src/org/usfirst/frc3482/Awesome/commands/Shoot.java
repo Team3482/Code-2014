@@ -39,8 +39,10 @@ public class Shoot extends CommandGroup {
     // Called once after isFinished returns true
     protected void end() {
 		Robot.wheelPickup.retractArms();
-		Robot.catapult.stopPull();
 		Robot.wheelPickup.retractArmsBack();
+		Robot.catapult.stopPull();
+		//Robot.catapult.engageClutch();
+		
     }
 
     // Called when another command which requires one or more of the same

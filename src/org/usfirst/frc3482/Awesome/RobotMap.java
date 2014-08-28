@@ -32,8 +32,8 @@ public class RobotMap {
 		// Both pneumatic arms are connected to this solenoid:
 		cylinderArms = new DoubleSolenoid(1, 2);
 		cylinderArmBack = new DoubleSolenoid(3, 4);
-		cylinderCatapultClutch = new DoubleSolenoid(5, 6);
-		cylinderCatapultRatchet = new DoubleSolenoid(7, 8);
+		cylinderCatapultClutch = new DoubleSolenoid(8, 6);
+		//cylinderCatapultRatchet = new DoubleSolenoid(5, 8);
 
 		wheelPickupFrontWheels = new Talon(1, 6);
 		LiveWindow.addActuator("Wheel Pickup", "Wheels", (Talon) wheelPickupFrontWheels);
