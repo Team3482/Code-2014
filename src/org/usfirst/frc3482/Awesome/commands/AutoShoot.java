@@ -15,7 +15,7 @@ import org.usfirst.frc3482.Awesome.Robot;
  */
 public class AutoShoot extends CommandGroup {
 	private final boolean TRYING_HIGH_GOAL = false;
-        private final boolean TRYING_TWO_BALL = true;
+        private final boolean TRYING_TWO_BALL = false;
 	public AutoShoot() {
         // Add Commands here:
 		// e.g. addSequential(new Command1());
@@ -39,6 +39,7 @@ public class AutoShoot extends CommandGroup {
 	protected void initialize() {
 	}
 	protected void execute() {
+		System.out.println("execute start");
 		double spinTime = 3;
                 if (!TRYING_TWO_BALL) {
                     if(Robot.camera.foundVertical() && Robot.camera.foundHorizontal()) {
@@ -98,7 +99,7 @@ public class AutoShoot extends CommandGroup {
                     //then retracts arms
                     Timer.delay(0.5);
                     Robot.wheelPickup.runWheelsInward();
-                    Robot.wheelPickup.retractArms();
+                    Robot.wheelPickup.retractArmsFront();
                     Timer.delay(1.0);
                     Robot.wheelPickup.stopFrontWheels();
                     Robot.wheelPickup.retractArmsBack();
@@ -110,22 +111,25 @@ public class AutoShoot extends CommandGroup {
 					Timer.delay(pullTime);
 					Robot.catapult.stopPull();
                     //addSequential(new Shoot());
-					Robot.wheelPickup.extendArms();
+					Robot.wheelPickup.extendArmsFront();
 					Robot.wheelPickup.extendArmsBack();
 					Timer.delay(1);
 					// disengages clutch and reverse pulls to help the catapult release
 					Robot.catapult.disengageClutch();
 					Robot.catapult.reversePull();
 					Timer.delay(0.25);
-					Robot.wheelPickup.retractArms();
+					Robot.wheelPickup.retractArmsFront();
 					Robot.catapult.stopPull();
 					Robot.wheelPickup.retractArmsBack();
+					System.out.println("execute stop");
                 }
 	}
 	protected boolean isFinished() {
+		System.out.println("autoshoot checking if finished");
 		return true;
 	}
 	protected void end() {
+		System.out.println("autoshoot end called");
 	}
 	protected void interrupted() {
 	}

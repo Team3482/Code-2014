@@ -53,9 +53,11 @@ public class Robot extends IterativeRobot {
 	 * and starts the compressor loop
 	 */
     public void autonomousInit() {
+		System.out.println("attempting to start auto");
         if (autonomousCommand != null) autonomousCommand.start();
         catapult.engageClutch();
         wheelPickup.startCompressor();
+		System.out.println("running auto");
     }
 
     /**
@@ -70,9 +72,12 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
+		System.out.println("attempting to stop auto");
         if (autonomousCommand != null) autonomousCommand.cancel();
-        teleopCommand.start();
+        System.out.println("starting teleop");
+		teleopCommand.start();
         wheelPickup.startCompressor();
+		System.out.println("running teleop");
     }
 
     /**

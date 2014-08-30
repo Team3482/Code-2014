@@ -23,7 +23,7 @@ public class Catch extends CommandGroup {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		Robot.wheelPickup.extendArmsBack();
-		Robot.wheelPickup.extendArms();
+		Robot.wheelPickup.extendArmsFront();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -34,7 +34,7 @@ public class Catch extends CommandGroup {
 	// Called once after isFinished returns true
 	protected void end() {
 		//retracts and sets the pistons off for the wheel pickup system
-		Robot.wheelPickup.retractArms();
+		Robot.wheelPickup.retractArmsFront();
 		Robot.wheelPickup.retractArmsBack();
 	}
 

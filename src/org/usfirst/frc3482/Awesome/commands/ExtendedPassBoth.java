@@ -44,7 +44,7 @@ public class ExtendedPassBoth extends CommandGroup {
 	protected void execute() {
 		//extends the pistons for the wheel pickup system and runs wheels to propel ball out
 		Robot.wheelPickup.expelForwards();
-		Robot.wheelPickup.extendArms();
+		Robot.wheelPickup.extendArmsFront();
 		Robot.wheelPickup.expelBackwards();
 		Robot.wheelPickup.extendArmsBack();
 		
@@ -58,7 +58,7 @@ public class ExtendedPassBoth extends CommandGroup {
 	// Called once after isFinished returns true
 	protected void end() {
 		//retracts and sets the pistons off for the wheel pickup system
-		Robot.wheelPickup.retractArms();
+		Robot.wheelPickup.retractArmsFront();
 		Robot.wheelPickup.stopFrontWheels();
 	}
 

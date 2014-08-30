@@ -13,6 +13,10 @@ public class Shoot extends CommandGroup {
         // eg. requires(chassis);
         requires(Robot.catapult);
 		requires(Robot.wheelPickup);
+		addParallel(new Drive());
+		//if(Robot.oi.loadBackButton.get()) {
+		//	addParallel(new LoadBack());
+		//}
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +26,7 @@ public class Shoot extends CommandGroup {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 		// extends arms to allow for catapult to shoot out
-		Robot.wheelPickup.extendArms();
+		Robot.wheelPickup.extendArmsFront();
 		Robot.wheelPickup.extendArmsBack();
 		Timer.delay(1);
 		// disengages clutch and reverse pulls to help the catapult release
@@ -38,7 +42,7 @@ public class Shoot extends CommandGroup {
 
     // Called once after isFinished returns true
     protected void end() {
-		Robot.wheelPickup.retractArms();
+		Robot.wheelPickup.retractArmsFront();
 		Robot.wheelPickup.retractArmsBack();
 		Robot.catapult.stopPull();
 		//Robot.catapult.engageClutch();

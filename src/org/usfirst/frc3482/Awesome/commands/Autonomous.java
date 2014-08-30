@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc3482.Awesome.Robot;
 
 public class  Autonomous extends CommandGroup {
-    private final boolean TRYING_TWO_BALL = true;
+    private final boolean TRYING_TWO_BALL = false;
     public Autonomous() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
@@ -35,9 +35,13 @@ public class  Autonomous extends CommandGroup {
 		}
 
         // Move up to the goal immediately, regardless of which targets were detected
+		System.out.println("attempting to extend front");
         addSequential(new ExtendFront(), 1.0);
+		System.out.println("attempting to move");
         addSequential(new Move(-0.8, 0.0, 3.0));
+		System.out.println("attempting autoshoot");
         addSequential(new AutoShoot());
+		System.out.println("done with sequence");
         //Robot.wheelPickup.retractArms();
     }
 }

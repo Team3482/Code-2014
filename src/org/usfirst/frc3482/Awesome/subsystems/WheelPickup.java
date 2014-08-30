@@ -20,7 +20,8 @@ public class WheelPickup extends Subsystem {
 		
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
-		retractArms();
+		retractArmsFront();
+		retractArmsBack();
 	}
 
 	// Compressor Functions
@@ -55,13 +56,13 @@ public class WheelPickup extends Subsystem {
 	}
 
 	// Arm functions
-	public void extendArms() {
+	public void extendArmsFront() {
 		cylinderArmsFront.set(DoubleSolenoid.Value.kForward);
 	}
-	public void ventArms() {
+	public void releaseArmsFront() {
 		cylinderArmsFront.set(DoubleSolenoid.Value.kOff);
 	}
-	public void retractArms() {
+	public void retractArmsFront() {
 		cylinderArmsFront.set(DoubleSolenoid.Value.kReverse);
 		runWheelsInward();
 		Timer.delay(0.7);
@@ -71,7 +72,7 @@ public class WheelPickup extends Subsystem {
 	public void extendArmsBack() {
 		cylinderArmsBack.set(DoubleSolenoid.Value.kForward);
 	}
-	public void ventArmsBack() {
+	public void releaseArmsBack() {
 		cylinderArmsBack.set(DoubleSolenoid.Value.kOff);
 	}
 	public void retractArmsBack() {

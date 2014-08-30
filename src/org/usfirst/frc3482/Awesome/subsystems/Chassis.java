@@ -77,8 +77,8 @@ public class Chassis extends Subsystem {
 		rightX *= sensitivity;
 		robotDrive.arcadeDrive(leftY, rightX);
 	}
+	
 	//moves the robot to a location
-
 	public void move(double moveValue, double rotateValue) {
 		robotDrive.arcadeDrive(moveValue, rotateValue);
 	}

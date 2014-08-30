@@ -24,7 +24,7 @@ public class LoadFront extends CommandGroup {
 		Robot.wheelPickup.runWheelsInward();
         Timer.delay(.375);
 		// delay to allow for wheels to accelerate before coming into contact with the ball
-		Robot.wheelPickup.extendArms();
+		Robot.wheelPickup.extendArmsFront();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -35,7 +35,7 @@ public class LoadFront extends CommandGroup {
 	// Called once after isFinished returns true
 	protected void end() {
 		//retracts and sets the pistons off for the wheel pickup system
-		Robot.wheelPickup.retractArms();
+		Robot.wheelPickup.retractArmsFront();
 		Robot.wheelPickup.stopFrontWheels();
 	}
 
