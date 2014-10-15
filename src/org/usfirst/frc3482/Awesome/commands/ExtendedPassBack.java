@@ -43,8 +43,8 @@ public class ExtendedPassBack extends CommandGroup {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		//extends the pistons for the wheel pickup system and runs wheels to propel ball out
-		Robot.wheelPickup.expelBackwards();
-		Robot.wheelPickup.extendArmsFront();
+				Robot.wheelPickup.retractArmsBack();
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -55,8 +55,8 @@ public class ExtendedPassBack extends CommandGroup {
 	// Called once after isFinished returns true
 	protected void end() {
 		//retracts and sets the pistons off for the wheel pickup system
-		Robot.wheelPickup.retractArmsFront();
-		Robot.wheelPickup.stopBackWheels();
+			Robot.wheelPickup.retractArmsBack();
+
 	}
 
 	// Called when another command which requires one or more of the same

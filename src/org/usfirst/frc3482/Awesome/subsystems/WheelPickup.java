@@ -33,7 +33,7 @@ public class WheelPickup extends Subsystem {
 	}
 
 	// Wheel functions
-	double wheelSpeed = -1.0;
+	double wheelSpeed = -1.00;
 	public void runWheelsInward() {
 		frontWheels.set(wheelSpeed);
 	}
@@ -64,9 +64,7 @@ public class WheelPickup extends Subsystem {
 	}
 	public void retractArmsFront() {
 		cylinderArmsFront.set(DoubleSolenoid.Value.kReverse);
-		runWheelsInward();
-		Timer.delay(0.7);
-		stopFrontWheels();
+		
 	}
 	
 	public void extendArmsBack() {
@@ -77,8 +75,6 @@ public class WheelPickup extends Subsystem {
 	}
 	public void retractArmsBack() {
 		cylinderArmsBack.set(DoubleSolenoid.Value.kReverse);
-		runBackWheelsInward();
-		Timer.delay(0.7);
-		stopBackWheels();
+		
 	}
 }

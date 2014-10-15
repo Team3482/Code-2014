@@ -105,8 +105,8 @@ public class OI {
         easyShoot.whenPressed(new Shoot());
 		catchButton = new JoystickButton(buttons, 3);
 		catchButton.whileHeld(new Catch());
-		configureCamera = new JoystickButton(buttons, 4);
-		configureCamera.whenPressed(new ConfigureCamera());
+		//configureCamera = new JoystickButton(buttons, 4);
+		//configureCamera.whenPressed(new IntakeBack());
 		// joystick buttons
         loadFrontButton = new JoystickButton(joystick, 6);
         loadFrontButton.whileHeld(new LoadFront());
@@ -123,9 +123,9 @@ public class OI {
         //aimButton = new JoystickButton(joystick, 10);
         //aimButton.whenPressed(new PositionRobot());
 		configureCamera = new JoystickButton(joystick, 3);
-		configureCamera.whenPressed(new ConfigureCamera());
+		configureCamera.whenPressed(new IntakeBack());
 		extendedPassBackButton = new JoystickButton(joystick, 4);
-		extendedPassBackButton.whileHeld(new ExtendedPassBack());
+		extendedPassBackButton.whileHeld(new ExtendedPassBack ());
 
 		pullBackTrigger = new leftTrigger();
 		pullBackTrigger.whileActive(new PullBack());

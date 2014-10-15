@@ -3,12 +3,12 @@ package org.usfirst.frc3482.Awesome.commands;
 import org.usfirst.frc3482.Awesome.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ConfigureCamera extends Command {
+public class IntakeBack extends Command {
 	
-	public ConfigureCamera() {
+	public IntakeBack() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.camera);
+		requires(Robot.wheelPickup);
 	}
 
 	// Called just before this Command runs the first time
@@ -18,16 +18,18 @@ public class ConfigureCamera extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.camera.initCamera();
+		Robot.wheelPickup.extendArmsBack();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.wheelPickup.extendArmsBack();
+
 	}
 
 	// Called when another command which requires one or more of the same

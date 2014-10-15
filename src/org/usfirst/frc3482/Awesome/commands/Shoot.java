@@ -12,9 +12,8 @@ public class Shoot extends CommandGroup {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(Robot.catapult);
-		requires(Robot.wheelPickup);
-		addParallel(new Drive());
-		//if(Robot.oi.loadBackButton.get()) {
+		//if(Robot.oi.joystick.getRawButton(5)) {
+		//if(Robot.chassis.isBackExtended(Robot.oi.joystick)) {
 		//	addParallel(new LoadBack());
 		//}
     }
@@ -25,14 +24,14 @@ public class Shoot extends CommandGroup {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+		//if(Robot.chassis.isBackExtended(Robot.oi.joystick)) {
+		//	addParallel(new LoadBack());
+		//}
 		// extends arms to allow for catapult to shoot out
-		Robot.wheelPickup.extendArmsFront();
-		Robot.wheelPickup.extendArmsBack();
-		Timer.delay(1);
+		
 		// disengages clutch and reverse pulls to help the catapult release
 		Robot.catapult.disengageClutch();
-		Robot.catapult.reversePull();
-		Timer.delay(0.25);
+	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -42,8 +41,7 @@ public class Shoot extends CommandGroup {
 
     // Called once after isFinished returns true
     protected void end() {
-		Robot.wheelPickup.retractArmsFront();
-		Robot.wheelPickup.retractArmsBack();
+		
 		Robot.catapult.stopPull();
 		//Robot.catapult.engageClutch();
 		

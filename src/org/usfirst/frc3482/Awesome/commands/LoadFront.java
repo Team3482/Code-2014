@@ -22,7 +22,7 @@ public class LoadFront extends CommandGroup {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		Robot.wheelPickup.runWheelsInward();
-        Timer.delay(.375);
+    
 		// delay to allow for wheels to accelerate before coming into contact with the ball
 		Robot.wheelPickup.extendArmsFront();
 	}

@@ -105,6 +105,10 @@ public class Chassis extends Subsystem {
 		Arrays.sort(v);
 		return v[49];
 	}
+	
+	public boolean isBackExtended(Joystick s) {
+		return s.getRawButton(5);
+	}
 
 	public class DistancePIDSource implements PIDSource {
 
